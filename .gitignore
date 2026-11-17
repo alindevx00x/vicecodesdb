@@ -1,0 +1,24 @@
+# Environment & Secrets
+.env
+.env.local
+.env.production
+
+# Logs & Runtime Cache
+storage/logs/*.log
+storage/logs/rate_limits/*
+storage/cache/*
+!storage/logs/.gitkeep
+!storage/logs/rate_limits/.gitkeep
+!storage/cache/.gitkeep
+
+# Generated OG Cache & Uploaded User Media (keep starter assets)
+public/og-cache/*
+public/uploads/editor/*
+!public/og-cache/.gitkeep
+!public/uploads/editor/.gitkeep
+
+# Dependencies & OS
+vendor/
+node_modules/
+.DS_Store
+Thumbs.db

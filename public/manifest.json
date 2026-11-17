@@ -1,0 +1,19 @@
+{
+  "name": "ViceCodes - GTA 6 Cheat Codes",
+  "short_name": "ViceCodes",
+  "description": "Verified GTA 6 cheat codes for PS5, Xbox Series X|S, and PC with offline quick loadout access.",
+  "start_url": "./cheats",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FAF6F0",
+  "theme_color": "#1B1C1D",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./assets/img/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
