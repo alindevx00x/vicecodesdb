@@ -52,7 +52,7 @@ $launchDate = $settings['launch_date'] ?? '2026-11-19T00:00:00Z';
           <div class="cd-box"><span class="cd-num" data-cd="secs">00</span><span class="cd-lbl">Sec</span></div>
         </div>
         <p style="font-size:13px;color:var(--text-secondary);margin:0 0 12px;">
-          Official launch: <strong>November 19, 2026</strong>. No official Rockstar codes published yet.
+          Launch: <strong>Nov 19, 2026</strong>. <strong>61 cheats</strong> unlock post-story (91 missions): <code>↑ Phone + L1/LB + R1/RB + D-Pad</code>.
         </p>
       <?php else: ?>
         <p style="font-size:14px;color:var(--text-primary);margin:12px 0;">

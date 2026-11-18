@@ -134,11 +134,15 @@ $blogImageDefaults = [
     ['do-gta-6-cheats-disable-trophies-achievements', '/assets/img/blog/gta-6-trophies-achievements.webp', 'PlayStation 5 console and DualSense controller representing PS5 Trophies and Story Mode saves'],
     ['gta-6-director-mode-sandbox-modifiers', '/assets/img/blog/gta-6-director-mode-skyline.webp', 'Illuminated Miami skyline at night representing GTA 6 Director Mode and world modifiers'],
     ['gta-6-vehicle-categories-rumored-spawns', '/assets/img/blog/gta-6-vehicle-spawns.webp', 'Yellow Audi R8 exotic supercar under city night lights representing GTA 6 vehicle spawn cheats'],
+    ['why-gta-6-cheats-dont-work-at-start-fact-check', '/assets/img/blog/gta-6-cheat-unlock-guide.webp', 'PS5 DualSense controller D-Pad and triggers used to enter GTA 6 cheat codes after unlocking the Cheats menu'],
 ];
 $stImg = $pdo->prepare("UPDATE `blog_posts` SET `featured_image` = ?, `featured_image_alt` = ? WHERE `slug` = ? AND (`featured_image` IS NULL OR `featured_image` = '')");
 foreach ($blogImageDefaults as [$slug, $imgPath, $altText]) {
     $stImg->execute([$imgPath, $altText, $slug]);
 }
+
+$pdo->prepare("UPDATE `settings` SET `setting_value` = ? WHERE `setting_key` = 'launch_banner_text' AND `setting_value` LIKE '0 Verified Codes (as of Nov 17%'")
+    ->execute(['61 GTA 6 Cheats Tracked · Unlock after 91 Story Missions (↑ Phone + L1/LB + R1/RB + D-Pad)']);
 
 if (!$indexExists($pdo, 'cheats', 'idx_cheats_retest')) {
     $pdo->exec("ALTER TABLE `cheats` ADD KEY `idx_cheats_retest` (`needs_retest`)");

@@ -160,15 +160,15 @@ INSERT INTO `blog_posts` (`id`, `title`, `slug`, `excerpt`, `quick_answer`, `con
 
 (2, 'How to Enter Cheat Codes in GTA 6 (PS5, Xbox & Phone Guide)',
 'how-to-enter-cheat-codes-in-gta-6',
-'Learn the two ways Rockstar games accept cheat inputs: fast controller button sequences and in-game smartphone dialing.',
-'In Rockstar''s modern GTA titles, cheat codes are entered either by pressing a rapid sequence of controller buttons during free roam or by dialing a specific phone number on your character''s smartphone. Always create a manual save first, because activating any cheat disables trophies and achievements for that session.',
-'<h2>Method 1: Controller Button Sequences (PS5 &amp; Xbox)</h2><p>When standing in free roam (not inside a cutscene or pause menu), input the directional D-Pad and face buttons smoothly without long pauses. A small notification banner appears above the radar when accepted.</p><h2>Method 2: Smartphone Dial Pad</h2><p>Since GTA IV and GTA V, Rockstar has also let players dial numeric codes (like <code>1-999-...</code>) on the in-game phone keypad. Phone cheats are easier to type without timing pressure and work identically to button combos.</p><h2>Important Rules Before Using Any Cheat</h2><table><thead><tr><th>Rule</th><th>Impact in GTA Story Mode</th></tr></thead><tbody><tr><td>Trophies &amp; Achievements</td><td>Disabled for the current session after activating a cheat.</td></tr><tr><td>Manual Save Files</td><td>Save before cheating, then reload that save to re-enable trophies.</td></tr><tr><td>Online / Multiplayer</td><td>Cheats never function in GTA Online modes.</td></tr></tbody></table>',
+'Step-by-step guide to unlocking GTA 6''s 61 cheats after the 91-mission story and entering codes with D-Pad Up + L1/LB + R1/RB.',
+'To enter cheat codes in GTA 6, first complete the 91-mission main story and each cheat''s specific unlock challenge to open the Cheats menu under Progress. Then press D-Pad Up to open your phone, hold L1 (PS5) or LB (Xbox) + press R1 (PS5) or RB (Xbox), and enter the D-Pad sequence.',
+'<h2>Step 1: Unlock the Cheats Menu (91 Missions + Challenges)</h2><p>Unlike GTA V, Rockstar does <strong>not</strong> let you activate GTA 6 cheats from Mission 1. You must complete the <strong>91-mission main story campaign</strong> first, which unlocks a <strong>Cheats</strong> section inside the <strong>Progress</strong> menu. On top of that, each of the <strong>61 total cheats</strong> requires completing a specific in-game challenge (for example, destroying 50 cocaine flamingos to unlock Inflatable Flamingo, or holding hands for 4 hours for Golden Hour).</p><h2>Step 2: Exact Controller Input Combo (PS5 &amp; Xbox)</h2><ol><li>Stand in Story Mode free roam and press <strong>D-Pad Up</strong> to open your character''s smartphone.</li><li><strong>PlayStation 5:</strong> Hold <strong>L1</strong> and press <strong>R1</strong>, then enter the directional <strong>D-Pad</strong> sequence.</li><li><strong>Xbox Series X|S:</strong> Hold <strong>LB</strong> and press <strong>RB</strong>, then enter the directional <strong>D-Pad</strong> sequence.</li></ol><h2>Important Rules Before Using Any Cheat</h2><table><thead><tr><th>Rule</th><th>Impact in GTA 6 Story Mode</th></tr></thead><tbody><tr><td>Story Requirement</td><td>Requires finishing the 91-mission story + per-cheat unlock challenges.</td></tr><tr><td>Trophies &amp; Saving</td><td>Disables Trophies/Achievements <strong>and blocks game saving</strong> for that session.</td></tr><tr><td>Online / Multiplayer</td><td>GTA 6 launches single-player only; cheats never function online.</td></tr></tbody></table>',
 8, '/assets/img/blog/how-to-enter-gta-6-cheats.webp', 'Wireless console controller in cyan and magenta neon lighting for entering GTA 6 button cheat codes', 'published', 1,
-'How to Enter Cheat Codes in GTA 6 (PS5, Xbox & Phone)',
-'Step-by-step guide on how to enter GTA 6 cheat codes using PS5 DualSense, Xbox Series X|S controllers, and the in-game phone without losing trophies.',
+'How to Enter Cheat Codes in GTA 6 (D-Pad Up + L1/R1 Guide)',
+'Learn how to unlock GTA 6''s 61 cheat codes after the 91-mission story and enter them on PS5 and Xbox Series X|S using D-Pad Up, L1/LB, and R1/RB.',
 'how to enter cheat codes in GTA 6',
-'[{"q":"How do I re-enable trophies after using cheats in GTA 6?","a":"Save your game before entering any cheat code. When finished messing around, quit or reload your clean pre-cheat save file to restore trophy and achievement tracking."}]',
-5, 1640, '2026-11-16 14:00:00'),
+'[{"q":"How do you enter cheat codes in GTA 6 on PS5 and Xbox?","a":"Open your in-game phone with D-Pad Up, hold L1 (PS5) or LB (Xbox) and press R1 (PS5) or RB (Xbox), then enter the D-Pad arrow sequence—after beating the 91-mission story and unlocking that cheat''s challenge."},{"q":"How do I re-enable trophies and saving after using cheats in GTA 6?","a":"Create a clean manual save before activating any cheat. When finished, quit or reload that pre-cheat save file to restore saving and trophy/achievement tracking."}]',
+5, 1640, '2026-11-18 14:00:00'),
 
 (3, 'GTA 5 vs GTA 6 Cheats: What Rockstar Could Change in Leonida',
 'gta-5-vs-gta-6-cheats-comparison',
@@ -184,15 +184,15 @@ INSERT INTO `blog_posts` (`id`, `title`, `slug`, `excerpt`, `quick_answer`, `con
 
 (4, 'Do GTA 6 Cheats Disable PS5 Trophies & Xbox Achievements?',
 'do-gta-6-cheats-disable-trophies-achievements',
-'How GTA 6 cheat activation affects PlayStation 5 Trophies, Xbox Series X|S Achievements, and how to protect your Story Mode save file.',
-'Yes—based on every modern Rockstar title including GTA V and Red Dead Redemption 2, activating any cheat code in GTA 6 will disable PlayStation Trophies and Xbox Achievements for your current play session. Always create a separate manual save before entering cheats.',
-'<h2>Why Rockstar Locks Trophies When Cheats Are Active</h2><p>Since GTA IV, Rockstar Games has enforced a strict rule: the moment you enter a controller button combination or dial a cheat phone number, an in-game banner warns you that <strong>Trophies / Achievements are disabled</strong> for the remainder of that session.</p><h2>How to Use Cheats Without Losing Trophy Progress</h2><ol><li><strong>Create a Clean Manual Save:</strong> Open the pause menu and save your Story Mode progress into a dedicated slot before testing any codes.</li><li><strong>Turn Off Auto-Save During Chaos Runs:</strong> Disable auto-save temporarily so a cheated session never overwrites your primary progression slot.</li><li><strong>Reload to Re-Enable Trophies:</strong> When you are ready to earn trophies again, close or reload your clean pre-cheat save file—the lock only applies to the active cheated session.</li></ol><h2>What About GTA 6 Online?</h2><p>Cheat codes only work in single-player Story Mode. Attempting to enter button combos in online multiplayer has no effect and will never unlock online cash or RP.</p>',
+'How GTA 6 cheat activation affects PlayStation 5 Trophies, Xbox Series X|S Achievements, and game saving.',
+'Yes—activating any cheat code in GTA 6 disables PlayStation Trophies and Xbox Achievements AND blocks you from saving the game for that active session. Always create a clean manual save before testing cheats.',
+'<h2>Why Rockstar Locks Trophies &amp; Saving When Cheats Are Active</h2><p>Confirmed launch guides show that the moment you enter a cheat code in GTA 6 (via <strong>D-Pad Up + L1/LB + R1/RB + D-Pad</strong>), both <strong>Trophies / Achievements and manual/auto saving are disabled</strong> for the remainder of that play session.</p><h2>How to Use Cheats Without Losing Progress</h2><ol><li><strong>Finish the Story &amp; Unlock Challenges First:</strong> GTA 6 locks its 61 cheats behind completing the 91-mission story and individual unlock tasks.</li><li><strong>Keep One Clean Manual Save:</strong> Save into a dedicated slot before turning on any cheat.</li><li><strong>Reload to Re-Enable Trophies &amp; Saving:</strong> When you are ready to save or earn trophies again, close or reload your clean pre-cheat save file.</li></ol><h2>What About GTA 6 Online?</h2><p>GTA 6 launches as a single-player console experience only, and cheat codes never carry over into multiplayer modes.</p>',
 8, '/assets/img/blog/gta-6-trophies-achievements.webp', 'PlayStation 5 console and DualSense controller representing PS5 Trophies and Story Mode saves', 'published', 1,
-'Do GTA 6 Cheats Disable PS5 Trophies & Xbox Achievements?',
-'Learn whether GTA 6 cheat codes lock PS5 Trophies and Xbox Achievements, and how to safely back up your Story Mode save before activating codes.',
+'Do GTA 6 Cheats Disable PS5 Trophies, Achievements & Saving?',
+'Yes: activating GTA 6 cheat codes disables PS5 Trophies, Xbox Achievements, and game saving for your active session. Learn how to protect your Story Mode save.',
 'do GTA 6 cheats disable trophies',
-'[{"q":"Are trophies permanently disabled if I use a cheat in GTA 6?","a":"No. Trophies and achievements are only locked for that active session. Reloading a clean manual save made before you entered any cheat restores trophy eligibility."},{"q":"Can I save my game after activating GTA 6 cheats?","a":"In GTA V and RDR2, saving while cheats are active can either be blocked or taint that specific save slot. Keep one dedicated clean save slot untouched."}]',
-3, 940, '2026-11-17 14:00:00'),
+'[{"q":"Are trophies and saving permanently disabled if I use a cheat in GTA 6?","a":"No. Both are only disabled for that active session. Reloading a clean manual save made before you entered any cheat restores saving and trophy eligibility."},{"q":"Can I save my game after activating GTA 6 cheats?","a":"No—activating a cheat in GTA 6 blocks saving for that session, so always make a manual save first."}]',
+3, 940, '2026-11-18 15:00:00'),
 
 (5, 'GTA 6 Director Mode & Sandbox Modifiers: What We Know Before Launch',
 'gta-6-director-mode-sandbox-modifiers',
@@ -216,8 +216,29 @@ INSERT INTO `blog_posts` (`id`, `title`, `slug`, `excerpt`, `quick_answer`, `con
 'Explore every GTA 6 vehicle category we are tracking for spawn cheats on PS5 and Xbox Series X|S, from Vice City supercars to helicopters and boats.',
 'GTA 6 vehicle spawn cheats',
 '[{"q":"Can you spawn any car in GTA 6 with a cheat code?","a":"Usually no. Rockstar limits vehicle spawn cheats to a curated list of 8 to 12 iconic cars, bikes, boats, and helicopters rather than every vehicle in the game."}]',
-4, 780, '2026-11-18 01:00:00')
-ON DUPLICATE KEY UPDATE `title` = VALUES(`title`);
+4, 780, '2026-11-18 01:00:00'),
+
+(7, 'Why GTA 6 Cheats Don''t Work at the Start (91 Missions, 61 Challenges & Viral Leak Fact-Check)',
+'why-gta-6-cheats-dont-work-at-start-fact-check',
+'Why entering GTA 6 cheat combos does nothing on Mission 1, how all 61 cheats unlock, and a fact-check of the viral AI-cracked cheat sheet.',
+'GTA 6 cheat codes do not work on a new save. You must complete all 91 main story missions to unlock the Cheats menu under Progress, plus finish individual challenges for each of the 61 cheats. Viral social graphics claiming AI-cracked instant $250,000 or vehicle codes skip these locks and remain unconfirmed.',
+'<h2>Why Entering Cheat Codes Does Nothing on a New Save</h2><p>Players unlocking GTA 6 early have quickly discovered a huge change from GTA V: typing button combinations during the opening hours triggers nothing. Rockstar has gated the entire cheat system behind two progression locks:</p><ul><li><strong>Beat the 91-Mission Story Campaign:</strong> Finishing the main story unlocks the <strong>Cheats</strong> section inside the <strong>Progress</strong> menu.</li><li><strong>Complete Each Cheat''s Challenge:</strong> All <strong>61 total cheats</strong> have individual unlock prerequisites—such as destroying <strong>50 cocaine flamingos</strong> for the <em>Inflatable Flamingo</em> cheat or spending <strong>4 hours holding hands</strong> to unlock the <em>Golden Hour</em> filter.</li></ul><h2>How Confirmed Cheats Are Activated</h2><p>Once a cheat is legitimately unlocked on your save file, press <strong>D-Pad Up</strong> to raise your in-game phone, <strong>hold L1 (PS5) / LB (Xbox) and press R1 (PS5) / RB (Xbox)</strong>, then enter its <strong>D-Pad arrow sequence</strong>. Note that enabling cheats disables both Trophies/Achievements and game saving for that session.</p><h2>Fact-Checking the Viral &ldquo;44 Cracked Codes&rdquo; Graphic</h2><p>A viral social post circulating ahead of US unlock claims an AI model (<em>Fable 5.2</em>) extrapolated 44 hidden codes from 17 known guides—including an instant <code>$250,000</code> cheat and vehicle/filter combos with orange-highlighted suffixes.</p><ul><li><strong>What Matches Reality:</strong> The <strong>61 total cheat count</strong>, the <code>↑ Phone + L1 + R1</code> trigger, and names like <em>Inflatable Flamingo</em> and <em>Golden Hour</em> align with early press guides.</li><li><strong>What Is Misleading / Unconfirmed:</strong> Traditional instant early-game cash cheats like <code>$250,000</code> do <strong>not</strong> work at the start in GTA 6, and directional button suffixes extrapolated by an AI are unverified until reproduced in-game on a 91-mission unlocked save.</li></ul><p>At ViceCodes, any unverified sequence stays strictly marked <strong>Unconfirmed</strong> until our editors reproduce it directly on retail PS5 and Xbox Series X|S builds.</p>',
+7, '/assets/img/blog/gta-6-cheat-unlock-guide.webp', 'PS5 DualSense controller D-Pad and triggers used to enter GTA 6 cheat codes after unlocking the Cheats menu', 'published', 1,
+'Why GTA 6 Cheats Don''t Work Yet (91 Missions & Leak Fact-Check)',
+'Learn why GTA 6 cheats don''t work at the start of the game, how the 61-cheat challenge unlock system works, and our honest fact-check of the viral 44-code leak.',
+'why GTA 6 cheats not working',
+'[{"q":"Why aren''t GTA 6 cheat codes working on my new save?","a":"GTA 6 locks cheats until you finish all 91 main story missions to unlock the Cheats menu under Progress, and each of the 61 cheats requires its own unlock challenge."},{"q":"Is the viral GTA 6 $250,000 cheat code real?","a":"Press coverage confirms traditional instant cash cheats do not work from the start in GTA 6, and AI-guessed sequences from viral social posts remain unconfirmed until tested on a completed save."}]',
+4, 420, '2026-11-18 19:00:00')
+ON DUPLICATE KEY UPDATE
+  `title` = VALUES(`title`),
+  `excerpt` = VALUES(`excerpt`),
+  `quick_answer` = VALUES(`quick_answer`),
+  `content` = VALUES(`content`),
+  `meta_title` = VALUES(`meta_title`),
+  `meta_description` = VALUES(`meta_description`),
+  `faqs_json` = VALUES(`faqs_json`),
+  `featured_image` = COALESCE(`featured_image`, VALUES(`featured_image`)),
+  `featured_image_alt` = COALESCE(`featured_image_alt`, VALUES(`featured_image_alt`));
 
 -- 6. Static Pages (Editable via Admin + TinyMCE)
 INSERT INTO `pages` (`id`, `title`, `slug`, `quick_answer`, `content`, `meta_title`, `meta_description`, `focus_keyword`, `status`) VALUES
@@ -270,7 +291,7 @@ INSERT INTO `settings` (`setting_key`, `setting_value`) VALUES
 ('site_tagline', 'Verified GTA 6 Cheat Codes for PS5, Xbox Series X|S & PC'),
 ('launch_date', '2026-11-19T00:00:00Z'),
 ('launch_mode', 'pre_launch'),
-('launch_banner_text', '0 Verified Codes (as of Nov 17, 2026) | Updated live at launch on Nov 19, 2026'),
+('launch_banner_text', '61 GTA 6 Cheats Tracked · Unlock after 91 Story Missions (↑ Phone + L1/LB + R1/RB + D-Pad)'),
 ('default_meta_title', 'GTA 6 Cheat Codes (PS5, Xbox, PC) - Live Verified List | ViceCodes'),
 ('default_meta_description', 'The fastest, most trusted list of GTA 6 cheat codes for PS5, Xbox Series X|S, and PC. Honest verification badges, one-click copy, phone codes, and Leonida guides.'),
 ('ga4_id', ''),
@@ -341,7 +362,8 @@ INSERT IGNORE INTO `blog_post_tags` (`blog_post_id`, `tag_id`) VALUES
 (3, 4), (3, 5), (3, 6), (3, 8),
 (4, 1), (4, 2), (4, 7),
 (5, 4), (5, 8),
-(6, 1), (6, 2), (6, 5), (6, 8);
+(6, 1), (6, 2), (6, 5), (6, 8),
+(7, 1), (7, 2), (7, 7), (7, 8);
 
 -- 9. Default Trust Badges (Footer Carousel)
 INSERT IGNORE INTO `trust_badges` (`id`, `label`, `badge_html`, `sort_order`, `is_active`) VALUES

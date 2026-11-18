@@ -54,19 +54,19 @@ final class HomeController extends Controller
         $homeFaqs = [
             [
                 'q' => 'Does GTA 6 have cheat codes on PS5 and Xbox Series X|S?',
-                'a' => 'As of November 17, 2026, Rockstar Games has not published official GTA 6 cheat codes ahead of the November 19, 2026 launch. Once the game unlocks, ViceCodes will test and publish verified PS5 and Xbox Series X|S controller sequences and phone codes live.',
+                'a' => 'Yes. GTA 6 includes 61 cheat codes across player, combat, vehicle, environment, and screen filter categories. However, you must beat the 91-mission main story first to unlock the Cheats menu under Progress, and complete each cheat\'s specific in-game challenge before activating it.',
             ],
             [
                 'q' => 'How do you enter cheat codes in GTA 6?',
-                'a' => 'In modern Grand Theft Auto titles, cheat codes are entered in Story Mode free roam either via rapid controller button combinations (D-Pad, face buttons, bumpers/triggers) or by dialing a cheat phone number on your character\'s smartphone.',
+                'a' => 'Once unlocked after finishing the story and each cheat\'s challenge, press D-Pad Up to open your in-game phone, hold L1 (PS5) or LB (Xbox) and press R1 (PS5) or RB (Xbox), then enter the D-Pad arrow sequence.',
             ],
             [
-                'q' => 'Do GTA 6 cheat codes disable PlayStation Trophies and Xbox Achievements?',
-                'a' => 'Yes. Based on GTA V and Red Dead Redemption 2, activating any cheat code disables trophies and achievements for your active session. Always create a manual backup save first so you can reload cleanly later.',
+                'q' => 'Do GTA 6 cheat codes disable PS5 Trophies, Xbox Achievements, and saving?',
+                'a' => 'Yes. Activating any cheat code in GTA 6 disables PlayStation Trophies and Xbox Achievements AND blocks saving for your active session. Always keep a clean manual save file ready to reload later.',
             ],
             [
-                'q' => 'Is there an unlimited money cheat code in GTA 6?',
-                'a' => 'No. Rockstar Games has not included direct infinite money button cheats since GTA San Andreas. Any website or video offering an "unlimited GTA 6 money generator" is fake or unsafe.',
+                'q' => 'Is there an instant $250,000 or unlimited money cheat code in GTA 6?',
+                'a' => 'No early-game money cheat works at launch. Traditional instant cash codes do not work from the start in GTA 6, and any website or social post claiming an unlimited GTA 6 money generator or crypto coin is fake.',
             ],
         ];
 
