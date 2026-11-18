@@ -112,6 +112,34 @@ $pdo->exec(
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
 );
 
+$defaultVideoSettings = [
+    ['video_section_enabled', '1'],
+    ['video_is_live', '1'],
+    ['video_section_title', 'GTA 6 Live Stream & Watch Desk'],
+    ['video_section_subtitle', 'Watch live launch countdown coverage, PS5/Xbox verification testing, and official breakdowns.'],
+    ['video_featured_url', 'https://www.youtube.com/watch?v=VEqImC8xFZ0'],
+    ['video_featured_title', 'GTA 6 Live Countdown & Launch Verification Stream'],
+    ['video_featured_note', 'Streaming live ahead of the Nov 19, 2026 unlock — stay tuned for instant Day-1 cheat testing.'],
+    ['video_extra_json', '[]'],
+];
+$stDef = $pdo->prepare('INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`) VALUES (?, ?)');
+foreach ($defaultVideoSettings as $pair) {
+    $stDef->execute($pair);
+}
+
+$blogImageDefaults = [
+    ['does-gta-6-have-cheat-codes-status', '/assets/img/blog/gta-6-cheat-codes-status.webp', 'Neon Art Deco hotel on Ocean Drive in Miami Beach representing Vice City ahead of GTA 6 launch'],
+    ['how-to-enter-cheat-codes-in-gta-6', '/assets/img/blog/how-to-enter-gta-6-cheats.webp', 'Wireless console controller in cyan and magenta neon lighting for entering GTA 6 button cheat codes'],
+    ['gta-5-vs-gta-6-cheats-comparison', '/assets/img/blog/gta-5-vs-gta-6-leonida.webp', 'Tropical palm trees at sunset over Florida waters representing Vice City and Leonida'],
+    ['do-gta-6-cheats-disable-trophies-achievements', '/assets/img/blog/gta-6-trophies-achievements.webp', 'PlayStation 5 console and DualSense controller representing PS5 Trophies and Story Mode saves'],
+    ['gta-6-director-mode-sandbox-modifiers', '/assets/img/blog/gta-6-director-mode-skyline.webp', 'Illuminated Miami skyline at night representing GTA 6 Director Mode and world modifiers'],
+    ['gta-6-vehicle-categories-rumored-spawns', '/assets/img/blog/gta-6-vehicle-spawns.webp', 'Yellow Audi R8 exotic supercar under city night lights representing GTA 6 vehicle spawn cheats'],
+];
+$stImg = $pdo->prepare("UPDATE `blog_posts` SET `featured_image` = ?, `featured_image_alt` = ? WHERE `slug` = ? AND (`featured_image` IS NULL OR `featured_image` = '')");
+foreach ($blogImageDefaults as [$slug, $imgPath, $altText]) {
+    $stImg->execute([$imgPath, $altText, $slug]);
+}
+
 if (!$indexExists($pdo, 'cheats', 'idx_cheats_retest')) {
     $pdo->exec("ALTER TABLE `cheats` ADD KEY `idx_cheats_retest` (`needs_retest`)");
     echo "[MIGRATED] Added idx_cheats_retest\n";

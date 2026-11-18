@@ -340,4 +340,47 @@
       }
     });
   }
+
+  // 11. Dashboard Livestream & Extra YouTube Videos Manager
+  const addVidBtn = document.getElementById('add-video-row');
+  const vidList = document.getElementById('video-rows');
+  if (addVidBtn && vidList) {
+    let vidIdx = vidList.querySelectorAll('.video-admin-row').length;
+    addVidBtn.addEventListener('click', () => {
+      const row = document.createElement('div');
+      row.className = 'video-admin-row';
+      row.style.cssText = 'display:grid;grid-template-columns:1fr 1.3fr auto auto;gap:8px;align-items:center;';
+      row.innerHTML = `
+        <input type="text" name="extra_title[${vidIdx}]" placeholder="Video title">
+        <input type="text" name="extra_url[${vidIdx}]" placeholder="https://www.youtube.com/watch?v=...">
+        <label style="font-size:12px;white-space:nowrap;"><input type="checkbox" name="extra_live[${vidIdx}]" value="1"> Live</label>
+        <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.remove()">✕</button>
+      `;
+      vidList.appendChild(row);
+      vidIdx++;
+    });
+  }
+
+  const dashYtInput = document.getElementById('video_featured_url');
+  const dashYtThumb = document.getElementById('vc-dash-yt-thumb');
+  const dashYtId = document.getElementById('vc-dash-yt-id');
+  if (dashYtInput && dashYtThumb && dashYtId) {
+    const extractYt = (val) => {
+      const v = val.trim();
+      if (/^[A-Za-z0-9_-]{11}$/.test(v)) return v;
+      const m = v.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|live\/|shorts\/|v\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/i);
+      return m ? m[1] : null;
+    };
+    dashYtInput.addEventListener('input', () => {
+      const id = extractYt(dashYtInput.value);
+      if (id) {
+        dashYtId.textContent = id;
+        dashYtThumb.src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+        dashYtThumb.hidden = false;
+      } else {
+        dashYtId.textContent = 'invalid';
+        dashYtThumb.hidden = true;
+      }
+    });
+  }
 })();

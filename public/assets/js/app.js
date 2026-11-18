@@ -786,4 +786,37 @@
       }
     }
   }
+
+  // 15. Homepage Live Stream / YouTube Playlist Switcher
+  const mainIframe = document.getElementById('vc-main-video-iframe');
+  const mainTitle = document.getElementById('vc-main-video-title');
+  const mainBadge = document.getElementById('vc-video-badge');
+  const mainExt = document.getElementById('vc-video-ext-link');
+  const swapBtns = document.querySelectorAll('[data-yt-swap]');
+  if (mainIframe && swapBtns.length > 0) {
+    swapBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const ytId = btn.dataset.ytSwap;
+        const title = btn.dataset.ytTitle || 'GTA 6 Video';
+        const url = btn.dataset.ytUrl || `https://www.youtube.com/watch?v=${ytId}`;
+        const isLive = btn.dataset.ytLive === '1';
+        if (!ytId) return;
+
+        mainIframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(ytId)}?rel=0&autoplay=1`;
+        mainIframe.title = title;
+        if (mainTitle) mainTitle.textContent = title;
+        if (mainExt) mainExt.href = url;
+        if (mainBadge) {
+          if (isLive) {
+            mainBadge.className = 'video-live-pill';
+            mainBadge.innerHTML = '<span class="video-live-dot" aria-hidden="true"></span> LIVE NOW';
+          } else {
+            mainBadge.className = 'video-type-pill';
+            mainBadge.textContent = '▶ FEATURED VIDEO';
+          }
+        }
+        swapBtns.forEach((b) => b.classList.toggle('active', b === btn));
+      });
+    });
+  }
 })();

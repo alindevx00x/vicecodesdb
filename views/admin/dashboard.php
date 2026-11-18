@@ -105,3 +105,117 @@ use App\Core\View;
     </div>
   </div>
 </div>
+
+<!-- Homepage Livestream & YouTube Videos Manager -->
+<?php
+  $curVideoUrl = (string) ($settings['video_featured_url'] ?? 'https://www.youtube.com/watch?v=VEqImC8xFZ0');
+  $curVideoId  = View::extractYoutubeId($curVideoUrl);
+?>
+<div class="adm-card" style="margin-top:20px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;">
+    <div>
+      <h2 style="margin:0;font-size:1.15rem;">Homepage Livestream &amp; YouTube Videos</h2>
+      <p style="margin:4px 0 0;font-size:13px;color:var(--adm-muted);">
+        Embed a YouTube livestream or video directly on the homepage (supports watch, live, shorts, and youtu.be links).
+      </p>
+    </div>
+    <a class="btn btn-secondary btn-sm" href="<?= View::e(Url::to('/#live-watch')) ?>" target="_blank">Preview on Homepage ↗</a>
+  </div>
+
+  <form action="<?= View::e(Url::to('/admin/dashboard/videos')) ?>" method="post">
+    <?= \App\Core\Security::csrfField() ?>
+    <div style="display:flex;gap:18px;flex-wrap:wrap;margin-bottom:14px;">
+      <label style="font-weight:700;">
+        <input type="checkbox" name="video_section_enabled" value="1" <?= ($settings['video_section_enabled'] ?? '1') === '1' ? 'checked' : '' ?>>
+        Show Livestream / Video Section on Homepage
+      </label>
+      <label style="font-weight:700;color:var(--color-2);">
+        <input type="checkbox" name="video_is_live" value="1" <?= ($settings['video_is_live'] ?? '1') === '1' ? 'checked' : '' ?>>
+        Mark Main Stream as LIVE NOW (Pulsing Red Badge)
+      </label>
+    </div>
+
+    <div class="adm-form-grid adm-form-2col">
+      <div>
+        <div class="field">
+          <label for="video_featured_url">Main YouTube Livestream / Video URL *</label>
+          <input
+            id="video_featured_url"
+            type="text"
+            name="video_featured_url"
+            value="<?= View::e($curVideoUrl) ?>"
+            placeholder="https://www.youtube.com/watch?v=VEqImC8xFZ0">
+        </div>
+        <div class="field">
+          <label for="video_featured_title">Main Stream / Video Title</label>
+          <input
+            id="video_featured_title"
+            type="text"
+            name="video_featured_title"
+            value="<?= View::e($settings['video_featured_title'] ?? 'GTA 6 Live Countdown & Launch Verification Stream') ?>">
+        </div>
+        <div class="field">
+          <label for="video_featured_note">Main Video Caption / Notes (optional)</label>
+          <input
+            id="video_featured_note"
+            type="text"
+            name="video_featured_note"
+            value="<?= View::e($settings['video_featured_note'] ?? '') ?>"
+            placeholder="Streaming live ahead of the Nov 19, 2026 unlock...">
+        </div>
+      </div>
+
+      <div>
+        <div class="field">
+          <label for="video_section_title">Homepage Section Heading</label>
+          <input
+            id="video_section_title"
+            type="text"
+            name="video_section_title"
+            value="<?= View::e($settings['video_section_title'] ?? 'GTA 6 Live Stream & Watch Desk') ?>">
+        </div>
+        <div class="field">
+          <label for="video_section_subtitle">Homepage Section Subtitle</label>
+          <input
+            id="video_section_subtitle"
+            type="text"
+            name="video_section_subtitle"
+            value="<?= View::e($settings['video_section_subtitle'] ?? '') ?>">
+        </div>
+        <div id="vc-dash-yt-preview" style="padding:10px;border:1px solid var(--adm-border);border-radius:8px;background:var(--color-13);display:flex;align-items:center;gap:12px;">
+          <?php if ($curVideoId): ?>
+            <img id="vc-dash-yt-thumb" src="https://i.ytimg.com/vi/<?= View::e($curVideoId) ?>/hqdefault.jpg" alt="YouTube preview" style="width:120px;height:68px;object-fit:cover;border-radius:6px;flex-shrink:0;">
+            <div style="font-size:12px;">
+              <strong style="display:block;color:var(--color-1);">Detected YouTube ID: <code id="vc-dash-yt-id"><?= View::e($curVideoId) ?></code></strong>
+              <span style="color:var(--adm-muted);">Embed ready via youtube-nocookie.com</span>
+            </div>
+          <?php else: ?>
+            <img id="vc-dash-yt-thumb" src="" alt="" hidden style="width:120px;height:68px;object-fit:cover;border-radius:6px;flex-shrink:0;">
+            <div style="font-size:12px;color:var(--adm-muted);">Paste a YouTube link to preview thumbnail (<code id="vc-dash-yt-id">none</code>).</div>
+          <?php endif; ?>
+        </div>
+      </div>
+    </div>
+
+    <hr style="border-color:var(--adm-border);margin:16px 0;">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;">
+      <h3 style="margin:0;font-size:1rem;">Additional YouTube Videos / Clips (Optional Playlist Strip)</h3>
+      <button type="button" id="add-video-row" class="btn btn-secondary btn-sm">+ Add YouTube Video</button>
+    </div>
+
+    <div id="video-rows" style="display:grid;gap:8px;margin-bottom:14px;">
+      <?php foreach ($extraVideos as $idx => $ev): ?>
+        <div class="video-admin-row" style="display:grid;grid-template-columns:1fr 1.3fr auto auto;gap:8px;align-items:center;">
+          <input type="text" name="extra_title[<?= (int) $idx ?>]" value="<?= View::e($ev['title'] ?? '') ?>" placeholder="Video title">
+          <input type="text" name="extra_url[<?= (int) $idx ?>]" value="<?= View::e($ev['url'] ?? '') ?>" placeholder="https://www.youtube.com/watch?v=...">
+          <label style="font-size:12px;white-space:nowrap;">
+            <input type="checkbox" name="extra_live[<?= (int) $idx ?>]" value="1" <?= !empty($ev['is_live']) ? 'checked' : '' ?>> Live
+          </label>
+          <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.remove()">✕</button>
+        </div>
+      <?php endforeach; ?>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Livestream &amp; Videos</button>
+  </form>
+</div>

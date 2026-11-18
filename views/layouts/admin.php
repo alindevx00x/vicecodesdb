@@ -88,6 +88,6 @@ $currentPath = Url::currentPath();
     </div>
   </div>
 
-  <script src="<?= View::e(Url::asset('js/admin.js')) ?>?v=2.2"></script>
+  <script src="<?= View::e(Url::asset('js/admin.js')) ?>?v=2.3"></script>
 </body>
 </html>

@@ -109,6 +109,7 @@ $router->get('/admin/logout', [\App\Controllers\Admin\AuthController::class, 'lo
 
 // Admin Panel
 $router->get('/admin', [\App\Controllers\Admin\DashboardController::class, 'index']);
+$router->post('/admin/dashboard/videos', [\App\Controllers\Admin\DashboardController::class, 'saveVideos']);
 $router->get('/admin/profile', [\App\Controllers\Admin\AuthController::class, 'profile']);
 $router->post('/admin/profile/update', [\App\Controllers\Admin\AuthController::class, 'updateProfile']);
 $router->post('/admin/profile/password', [\App\Controllers\Admin\AuthController::class, 'updatePassword']);

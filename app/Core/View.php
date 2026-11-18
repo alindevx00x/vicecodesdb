@@ -165,4 +165,22 @@ final class View
 
         return '';
     }
+
+    /**
+     * Extract an 11-character YouTube video ID from any standard YouTube / Live / Shorts URL or raw ID.
+     */
+    public static function extractYoutubeId(string $input): ?string
+    {
+        $val = trim($input);
+        if ($val === '') {
+            return null;
+        }
+        if (preg_match('/^[A-Za-z0-9_-]{11}$/', $val)) {
+            return $val;
+        }
+        if (preg_match('~(?:youtube\.com/(?:watch\?(?:.*&)?v=|embed/|live/|shorts/|v/)|youtu\.be/)([A-Za-z0-9_-]{11})~i', $val, $m)) {
+            return $m[1];
+        }
+        return null;
+    }
 }

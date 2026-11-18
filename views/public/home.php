@@ -166,6 +166,91 @@ $launchDate = $settings['launch_date'] ?? '2026-11-19T00:00:00Z';
 </section>
 <?php endif; ?>
 
+<!-- 2C. Live Stream & YouTube Video Hub -->
+<?php if (!empty($videoHub['enabled'])): ?>
+<section class="section" style="padding-top:8px;padding-bottom:24px;" id="live-watch">
+  <div class="container">
+    <div class="paper-card video-hub-card">
+      <div class="video-hub-head">
+        <div>
+          <span class="eyebrow" style="display:inline-flex;align-items:center;gap:8px;">
+            <?php if (!empty($videoHub['is_live'])): ?>
+              <span class="video-live-pill" id="vc-video-badge"><span class="video-live-dot" aria-hidden="true"></span> LIVE NOW</span>
+            <?php else: ?>
+              <span class="video-type-pill" id="vc-video-badge">▶ FEATURED VIDEO</span>
+            <?php endif; ?>
+            <span>Watch Desk</span>
+          </span>
+          <h2 style="margin:4px 0 0;"><?= View::e($videoHub['section_title']) ?></h2>
+          <?php if (!empty($videoHub['section_sub'])): ?>
+            <p class="section-sub" style="margin-top:4px;"><?= View::e($videoHub['section_sub']) ?></p>
+          <?php endif; ?>
+        </div>
+        <?php if (!empty($videoHub['featured_url'])): ?>
+          <a id="vc-video-ext-link" class="btn btn-outline btn-sm" href="<?= View::e($videoHub['featured_url']) ?>" target="_blank" rel="noopener">Watch on YouTube ↗</a>
+        <?php endif; ?>
+      </div>
+
+      <?php if (!empty($videoHub['featured_id'])): ?>
+        <div class="video-stage">
+          <iframe
+            id="vc-main-video-iframe"
+            src="https://www.youtube-nocookie.com/embed/<?= View::e($videoHub['featured_id']) ?>?rel=0"
+            title="<?= View::e($videoHub['featured_title']) ?>"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+        </div>
+        <div class="video-stage-meta">
+          <h3 id="vc-main-video-title" style="margin:0;"><?= View::e($videoHub['featured_title']) ?></h3>
+          <?php if (!empty($videoHub['featured_note'])): ?>
+            <p id="vc-main-video-note" class="muted" style="margin:4px 0 0;font-size:14px;"><?= View::e($videoHub['featured_note']) ?></p>
+          <?php else: ?>
+            <p id="vc-main-video-note" class="muted" style="margin:4px 0 0;font-size:14px;" hidden></p>
+          <?php endif; ?>
+        </div>
+      <?php endif; ?>
+
+      <?php if (!empty($videoHub['extras'])): ?>
+        <div class="video-extras-grid" aria-label="More GTA 6 videos and streams">
+          <?php if (!empty($videoHub['featured_id'])): ?>
+            <button
+              type="button"
+              class="video-extra-card active"
+              data-yt-swap="<?= View::e($videoHub['featured_id']) ?>"
+              data-yt-title="<?= View::e($videoHub['featured_title']) ?>"
+              data-yt-url="<?= View::e($videoHub['featured_url']) ?>"
+              data-yt-live="<?= !empty($videoHub['is_live']) ? '1' : '0' ?>">
+              <div class="video-extra-thumb">
+                <img src="https://i.ytimg.com/vi/<?= View::e($videoHub['featured_id']) ?>/hqdefault.jpg" alt="<?= View::e($videoHub['featured_title']) ?>" loading="lazy">
+                <span class="video-extra-tag"><?= !empty($videoHub['is_live']) ? '● LIVE' : '▶ MAIN' ?></span>
+              </div>
+              <div class="video-extra-title"><?= View::e($videoHub['featured_title']) ?></div>
+            </button>
+          <?php endif; ?>
+          <?php foreach ($videoHub['extras'] as $ev): ?>
+            <button
+              type="button"
+              class="video-extra-card"
+              data-yt-swap="<?= View::e($ev['id']) ?>"
+              data-yt-title="<?= View::e($ev['title']) ?>"
+              data-yt-url="<?= View::e($ev['url']) ?>"
+              data-yt-live="<?= !empty($ev['is_live']) ? '1' : '0' ?>">
+              <div class="video-extra-thumb">
+                <img src="https://i.ytimg.com/vi/<?= View::e($ev['id']) ?>/hqdefault.jpg" alt="<?= View::e($ev['title']) ?>" loading="lazy">
+                <span class="video-extra-tag"><?= !empty($ev['is_live']) ? '● LIVE' : '▶ VIDEO' ?></span>
+              </div>
+              <div class="video-extra-title"><?= View::e($ev['title']) ?></div>
+            </button>
+          <?php endforeach; ?>
+        </div>
+      <?php endif; ?>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
+
 <!-- 3. Category Quick Links -->
 <section class="section" style="padding-top:16px;">
   <div class="container">

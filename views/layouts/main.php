@@ -52,7 +52,7 @@ $currentPath = Url::currentPath();
     body{margin:0;background:#FAF6F0;color:#1B1C1D;font-family:'Atkinson Hyperlegible',Arial,sans-serif;}
     .site-header{position:sticky;top:0;z-index:60;background:rgba(250,246,240,.94);border-bottom:1px solid #D6CAB8;}
   </style>
-  <link rel="stylesheet" href="<?= View::e(Url::asset('css/style.css')) ?>?v=2.2">
+  <link rel="stylesheet" href="<?= View::e(Url::asset('css/style.css')) ?>?v=2.3">
 
   <!-- Structured Data (JSON-LD) -->
   <?php if (!empty($seo['schemas']) && is_array($seo['schemas'])): ?>
@@ -295,7 +295,7 @@ $currentPath = Url::currentPath();
       initialPlatform: <?= json_encode($activePlatform ?? '') ?>
     };
   </script>
-  <script defer src="<?= View::e(Url::asset('js/app.js')) ?>?v=2.2"></script>
+  <script defer src="<?= View::e(Url::asset('js/app.js')) ?>?v=2.3"></script></script>
   <?php if (!empty($settings['custom_body_code'])): ?>
   <?= $settings['custom_body_code'] . "\n" ?>
   <?php endif; ?>

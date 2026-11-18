@@ -5,6 +5,7 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Core\Seo;
+use App\Core\View;
 use App\Models\BlogPost;
 use App\Models\Cheat;
 
@@ -19,6 +20,36 @@ final class HomeController extends Controller
         }
         $liveUpdates = Cheat::recentLiveUpdates(6);
         $latestPosts = BlogPost::published([], 3);
+
+        $videoEnabled = ($this->settings['video_section_enabled'] ?? '1') === '1';
+        $featuredUrl = (string) ($this->settings['video_featured_url'] ?? 'https://www.youtube.com/watch?v=VEqImC8xFZ0');
+        $featuredId = View::extractYoutubeId($featuredUrl);
+        $extraRaw = json_decode((string) ($this->settings['video_extra_json'] ?? '[]'), true);
+        $extras = [];
+        if (is_array($extraRaw)) {
+            foreach ($extraRaw as $ev) {
+                $ytId = View::extractYoutubeId((string) ($ev['url'] ?? ''));
+                if ($ytId) {
+                    $extras[] = [
+                        'id'      => $ytId,
+                        'url'     => (string) $ev['url'],
+                        'title'   => trim((string) ($ev['title'] ?? '')) ?: 'GTA 6 Video Update',
+                        'is_live' => !empty($ev['is_live']),
+                    ];
+                }
+            }
+        }
+        $videoHub = [
+            'enabled'        => $videoEnabled && ($featuredId !== null || $extras !== []),
+            'is_live'        => ($this->settings['video_is_live'] ?? '1') === '1',
+            'section_title'  => (string) ($this->settings['video_section_title'] ?? 'GTA 6 Live Stream & Watch Desk'),
+            'section_sub'    => (string) ($this->settings['video_section_subtitle'] ?? 'Watch live launch countdown coverage, PS5/Xbox verification testing, and official breakdowns.'),
+            'featured_id'    => $featuredId,
+            'featured_url'   => $featuredUrl,
+            'featured_title' => (string) ($this->settings['video_featured_title'] ?? 'GTA 6 Live Countdown & Launch Verification Stream'),
+            'featured_note'  => (string) ($this->settings['video_featured_note'] ?? ''),
+            'extras'         => $extras,
+        ];
 
         $homeFaqs = [
             [
@@ -61,6 +92,7 @@ final class HomeController extends Controller
             'liveUpdates'    => $liveUpdates,
             'latestPosts'    => $latestPosts,
             'homeFaqs'       => $homeFaqs,
+            'videoHub'       => $videoHub,
         ]);
     }
 }
