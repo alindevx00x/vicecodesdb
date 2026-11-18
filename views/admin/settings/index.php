@@ -111,6 +111,45 @@ use App\Core\View;
           <input id="smtp_pass" type="password" name="smtp_pass" value="<?= View::e($settings['smtp_pass'] ?? '') ?>" autocomplete="off">
         </div>
       </div>
+      <div style="padding:12px;border:1px dashed var(--adm-border);border-radius:8px;background:var(--color-13);margin-top:6px;">
+        <label for="test_mail_to" style="display:block;font-weight:700;font-size:13px;margin-bottom:6px;">Test Transactional Email Delivery</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+          <input
+            id="test_mail_to"
+            type="email"
+            value="<?= View::e($adminUser['email'] ?? ($settings['contact_email'] ?? '')) ?>"
+            placeholder="recipient@example.com"
+            style="flex:1;min-width:210px;">
+          <button
+            type="button"
+            id="js-test-mailer-btn"
+            class="btn btn-secondary btn-sm"
+            data-test-url="<?= View::e(Url::to('/admin/settings/test-mail')) ?>">
+            Send Test Email
+          </button>
+        </div>
+        <div id="js-test-mailer-result" style="margin-top:8px;font-size:13px;" hidden></div>
+      </div>
+
+      <hr style="border-color:var(--adm-border);margin:18px 0;">
+      <h3 style="margin:0 0 6px;">Custom Code Injection (Header &amp; Body)</h3>
+      <p style="font-size:12px;color:var(--adm-muted);margin:0 0 12px;">
+        Paste verification meta tags, analytics scripts, AdSense, or custom embeds. Output directly on all public pages.
+      </p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="field">
+          <label for="custom_head_code">Header Code (before <code>&lt;/head&gt;</code>)</label>
+          <textarea id="custom_head_code" name="custom_head_code" rows="5" style="font-family:monospace;font-size:12px;" placeholder="<!-- Google Search Console, AdSense, custom CSS/scripts -->"><?= View::e($settings['custom_head_code'] ?? '') ?></textarea>
+        </div>
+        <div class="field">
+          <label for="custom_body_code">Body Code (before <code>&lt;/body&gt;</code>)</label>
+          <textarea id="custom_body_code" name="custom_body_code" rows="5" style="font-family:monospace;font-size:12px;" placeholder="<!-- Chat widget, tracking pixels, custom footer JS -->"><?= View::e($settings['custom_body_code'] ?? '') ?></textarea>
+        </div>
+      </div>
+      <div class="field">
+        <label for="custom_body_open_code">Body Top Code (immediately after <code>&lt;body&gt;</code>, e.g. GTM noscript)</label>
+        <textarea id="custom_body_open_code" name="custom_body_open_code" rows="3" style="font-family:monospace;font-size:12px;" placeholder="<!-- Optional Google Tag Manager noscript -->"><?= View::e($settings['custom_body_open_code'] ?? '') ?></textarea>
+      </div>
 
       <hr style="border-color:var(--adm-border);margin:18px 0;">
       <h3 style="margin:0 0 10px;">Admin Security (Optional TOTP 2FA &amp; IP Allowlist)</h3>

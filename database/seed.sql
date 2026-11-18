@@ -294,7 +294,15 @@ INSERT INTO `settings` (`setting_key`, `setting_value`) VALUES
 ('smtp_encryption', 'tls'),
 ('admin_2fa_enabled', '0'),
 ('admin_2fa_secret', ''),
-('admin_ip_allowlist', '')
+('admin_ip_allowlist', ''),
+('custom_head_code', ''),
+('custom_body_open_code', ''),
+('custom_body_code', ''),
+('badges_enabled', '1'),
+('badges_heading', 'Recognition & Trust'),
+('badges_subheading', 'Our product has gained industry recognition'),
+('badges_speed', '100'),
+('badges_bg_style', 'dark')
 ON DUPLICATE KEY UPDATE `setting_value` = VALUES(`setting_value`);
 
 -- 8. Internal Linking Tags & Relationships
@@ -326,4 +334,9 @@ INSERT IGNORE INTO `blog_post_tags` (`blog_post_id`, `tag_id`) VALUES
 (4, 1), (4, 2), (4, 7),
 (5, 4), (5, 8),
 (6, 1), (6, 2), (6, 5), (6, 8);
+
+-- 9. Default Trust Badges (Footer Carousel)
+INSERT IGNORE INTO `trust_badges` (`id`, `label`, `badge_html`, `sort_order`, `is_active`) VALUES
+(1, 'Featured on Twelve Tools', '<a href="https://twelve.tools" target="_blank" rel="noopener"><img src="https://twelve.tools/badge1-white.svg" alt="Featured on Twelve Tools" width="200" height="54" /></a>', 1, 1),
+(2, 'My Launch Stash', '<a target="_blank" rel="noopener" href="https://mylaunchstash.com"><img src="https://mylaunchstash.com/assets/images/badge.png" alt="My Launch Stash" height="54" /></a>', 2, 1);
 

@@ -52,7 +52,7 @@ $currentPath = Url::currentPath();
     body{margin:0;background:#FAF6F0;color:#1B1C1D;font-family:'Atkinson Hyperlegible',Arial,sans-serif;}
     .site-header{position:sticky;top:0;z-index:60;background:rgba(250,246,240,.94);border-bottom:1px solid #D6CAB8;}
   </style>
-  <link rel="stylesheet" href="<?= View::e(Url::asset('css/style.css')) ?>?v=2.1">
+  <link rel="stylesheet" href="<?= View::e(Url::asset('css/style.css')) ?>?v=2.2">
 
   <!-- Structured Data (JSON-LD) -->
   <?php if (!empty($seo['schemas']) && is_array($seo['schemas'])): ?>
@@ -70,8 +70,14 @@ $currentPath = Url::currentPath();
   <?php if (!empty($settings['plausible_domain'])): ?>
   <script defer data-domain="<?= View::e($settings['plausible_domain']) ?>" src="https://plausible.io/js/script.js"></script>
   <?php endif; ?>
+  <?php if (!empty($settings['custom_head_code'])): ?>
+  <?= $settings['custom_head_code'] . "\n" ?>
+  <?php endif; ?>
 </head>
 <body>
+  <?php if (!empty($settings['custom_body_open_code'])): ?>
+  <?= $settings['custom_body_open_code'] . "\n" ?>
+  <?php endif; ?>
   <a class="sr-only" href="#main">Skip to content</a>
 
   <!-- Reading Progress Bar -->
@@ -104,10 +110,6 @@ $currentPath = Url::currentPath();
       </nav>
 
       <div class="header-actions">
-        <button type="button" class="cmdk-trigger" data-open-cmdk aria-label="Quick search cheats (Cmd+K)">
-          <span>Quick Find</span>
-          <kbd>⌘K</kbd>
-        </button>
         <form class="header-search" action="<?= View::e(Url::to('/search')) ?>" method="get" role="search">
           <label for="hdr-q" class="sr-only">Search GTA 6 cheats</label>
           <input id="hdr-q" type="search" name="q" placeholder="Search cheats, cars..." value="<?= View::e($_GET['q'] ?? '') ?>">
@@ -203,6 +205,28 @@ $currentPath = Url::currentPath();
         </div>
       </div>
 
+      <?php if (($settings['badges_enabled'] ?? '1') === '1' && !empty($trustBadges)):
+        $badgesDark = ($settings['badges_bg_style'] ?? 'dark') === 'dark';
+        $badgeSpeed = max(20, min(400, (int) ($settings['badges_speed'] ?? 100)));
+      ?>
+        <section class="vc-badges-section <?= $badgesDark ? 'vc-badges-dark' : 'vc-badges-light' ?>" aria-label="<?= View::e($settings['badges_heading'] ?? 'Recognition & Trust') ?>">
+          <div class="vc-badges-head">
+            <div class="vc-badges-title"><?= View::e($settings['badges_heading'] ?? 'Recognition & Trust') ?></div>
+            <?php if (!empty($settings['badges_subheading'])): ?>
+              <p class="vc-badges-sub"><?= View::e($settings['badges_subheading']) ?></p>
+            <?php endif; ?>
+          </div>
+          <div class="badge-slider">
+            <div class="badge-track" data-speed="<?= $badgeSpeed ?>">
+              <?php foreach ($trustBadges as $badge): ?>
+                <?= $badge['badge_html'] ?>
+              <?php endforeach; ?>
+            </div>
+          </div>
+          <style id="dynamic-carousel-style"></style>
+        </section>
+      <?php endif; ?>
+
       <div class="footer-disclaimer">
         <p style="margin:0 0 6px;"><strong>Disclaimer:</strong> <?= View::e($settings['footer_disclaimer'] ?? '') ?></p>
         <p style="margin:0;">&copy; <?= date('Y') ?> <?= View::e($settings['site_name'] ?? 'ViceCodes') ?>. <a href="<?= View::e(Url::to('/sitemap.xml')) ?>">Sitemap</a> · <a href="<?= View::e(Url::to('/llms.txt')) ?>">llms.txt</a> · <a href="<?= View::e(Url::to('/feed.xml')) ?>">RSS</a></p>
@@ -271,6 +295,9 @@ $currentPath = Url::currentPath();
       initialPlatform: <?= json_encode($activePlatform ?? '') ?>
     };
   </script>
-  <script defer src="<?= View::e(Url::asset('js/app.js')) ?>?v=2.1"></script>
+  <script defer src="<?= View::e(Url::asset('js/app.js')) ?>?v=2.2"></script>
+  <?php if (!empty($settings['custom_body_code'])): ?>
+  <?= $settings['custom_body_code'] . "\n" ?>
+  <?php endif; ?>
 </body>
 </html>

@@ -43,6 +43,7 @@ $currentPath = Url::currentPath();
         <a href="<?= View::e(Url::to('/admin/categories')) ?>" class="<?= str_starts_with($currentPath, '/admin/categories') ? 'active' : '' ?>">Categories</a>
         <a href="<?= View::e(Url::to('/admin/newsletter')) ?>" class="<?= str_starts_with($currentPath, '/admin/newsletter') ? 'active' : '' ?>">Newsletter</a>
         <a href="<?= View::e(Url::to('/admin/media')) ?>" class="<?= str_starts_with($currentPath, '/admin/media') ? 'active' : '' ?>">Media Library</a>
+        <a href="<?= View::e(Url::to('/admin/badges')) ?>" class="<?= str_starts_with($currentPath, '/admin/badges') ? 'active' : '' ?>">Trust Badges</a>
         <a href="<?= View::e(Url::to('/admin/settings')) ?>" class="<?= str_starts_with($currentPath, '/admin/settings') ? 'active' : '' ?>">Site Settings</a>
         <a href="<?= View::e(Url::to('/admin/profile')) ?>" class="<?= str_starts_with($currentPath, '/admin/profile') ? 'active' : '' ?>">Profile &amp; Password</a>
       </nav>
@@ -87,6 +88,6 @@ $currentPath = Url::currentPath();
     </div>
   </div>
 
-  <script src="<?= View::e(Url::asset('js/admin.js')) ?>?v=2.1"></script>
+  <script src="<?= View::e(Url::asset('js/admin.js')) ?>?v=2.2"></script>
 </body>
 </html>

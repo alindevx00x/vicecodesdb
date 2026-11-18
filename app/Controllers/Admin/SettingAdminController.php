@@ -5,6 +5,7 @@ namespace App\Controllers\Admin;
 
 use App\Core\Controller;
 use App\Core\Database;
+use App\Core\Mailer;
 use App\Core\PageCache;
 use App\Core\Security;
 use App\Core\Url;
@@ -55,6 +56,7 @@ final class SettingAdminController extends Controller
             'indexnow_key', 'mail_driver', 'mail_from', 'mail_api_key',
             'smtp_host', 'smtp_port', 'smtp_user', 'smtp_pass', 'smtp_encryption',
             'admin_2fa_secret', 'admin_ip_allowlist',
+            'custom_head_code', 'custom_body_open_code', 'custom_body_code',
         ];
 
         $updates = [];
@@ -89,6 +91,57 @@ final class SettingAdminController extends Controller
         ActivityLog::record((int) $user['id'], 'cache_clear', 'cache', null, 'Flushed HTML page cache');
         View::setFlash('success', 'Page cache flushed successfully.');
         $this->redirect('/admin/settings');
+    }
+
+    public function testMail(): void
+    {
+        $user = $this->requireAdmin();
+        $this->requirePostCsrf();
+
+        $to = filter_var(trim((string) ($_POST['test_to'] ?? '')), FILTER_VALIDATE_EMAIL);
+        if (!$to) {
+            $this->json(['ok' => false, 'message' => 'Please enter a valid recipient email address.'], 422);
+            return;
+        }
+
+        $saved = Setting::allKeyed();
+        $mailerKeys = ['mail_driver', 'mail_from', 'mail_api_key', 'smtp_host', 'smtp_port', 'smtp_encryption', 'smtp_user', 'smtp_pass'];
+        $testSettings = $saved;
+        foreach ($mailerKeys as $k) {
+            if (isset($_POST[$k])) {
+                $testSettings[$k] = trim((string) $_POST[$k]);
+            }
+        }
+
+        $driver = strtolower((string) ($testSettings['mail_driver'] ?? 'log'));
+        $siteName = (string) ($testSettings['site_name'] ?? 'ViceCodes');
+        $subject = "{$siteName} Mailer Test (" . strtoupper($driver) . ")";
+        $html = '<h2>Mailer Configuration Test</h2><p>Your transactional email settings for <strong>'
+            . View::e($siteName) . '</strong> using driver <code>' . View::e($driver)
+            . '</code> are working at ' . date('Y-m-d H:i:s T') . '.</p>';
+        $text = "Mailer Configuration Test\nYour transactional email settings for {$siteName} ({$driver}) succeeded at " . date('Y-m-d H:i:s T');
+
+        $result = Mailer::send($to, $subject, $html, $text, $testSettings);
+        ActivityLog::record((int) $user['id'], 'test_mailer', 'settings', null, "Tested {$driver} mailer to {$to}: " . (!empty($result['ok']) ? 'OK' : 'FAILED'));
+
+        if (!empty($result['ok'])) {
+            $msg = $driver === 'log'
+                ? "Local Log driver succeeded! Recorded test message in storage/logs/newsletter_emails.log (to: {$to})."
+                : "Test email sent successfully via " . strtoupper($driver) . " to {$to}!";
+            $this->json(['ok' => true, 'driver' => $driver, 'message' => $msg, 'result' => $result]);
+            return;
+        }
+
+        $errDetail = (string) ($result['error'] ?? $result['response'] ?? 'Unknown delivery error');
+        if (!empty($result['http_code'])) {
+            $errDetail = "HTTP {$result['http_code']}: {$errDetail}";
+        }
+        $this->json([
+            'ok'      => false,
+            'driver'  => $driver,
+            'message' => 'Test email failed (' . strtoupper($driver) . '): ' . $errDetail,
+            'result'  => $result,
+        ], 422);
     }
 
     public function contactStatus(array $params): void

@@ -163,9 +163,26 @@ final class Mailer
             }
         }
 
-        $cmd("MAIL FROM:<{$from}>");
-        $cmd("RCPT TO:<{$to}>");
-        $cmd('DATA');
+        $mailFromResp = $cmd("MAIL FROM:<{$from}>");
+        if (!str_starts_with($mailFromResp, '250')) {
+            $cmd('QUIT');
+            fclose($fp);
+            return ['ok' => false, 'driver' => 'smtp', 'error' => 'MAIL FROM rejected: ' . trim($mailFromResp)];
+        }
+
+        $rcptResp = $cmd("RCPT TO:<{$to}>");
+        if (!str_starts_with($rcptResp, '250') && !str_starts_with($rcptResp, '251')) {
+            $cmd('QUIT');
+            fclose($fp);
+            return ['ok' => false, 'driver' => 'smtp', 'error' => 'RCPT TO rejected: ' . trim($rcptResp)];
+        }
+
+        $dataStart = $cmd('DATA');
+        if (!str_starts_with($dataStart, '354')) {
+            $cmd('QUIT');
+            fclose($fp);
+            return ['ok' => false, 'driver' => 'smtp', 'error' => 'DATA rejected: ' . trim($dataStart)];
+        }
 
         $boundary = 'vc_' . bin2hex(random_bytes(8));
         $msg  = "From: {$siteName} <{$from}>\r\n";
@@ -181,6 +198,12 @@ final class Mailer
         $cmd('QUIT');
         fclose($fp);
 
-        return ['ok' => str_starts_with($dataResp, '250'), 'driver' => 'smtp'];
+        $ok = str_starts_with($dataResp, '250');
+        return [
+            'ok'       => $ok,
+            'driver'   => 'smtp',
+            'response' => trim($dataResp),
+            'error'    => $ok ? null : ('SMTP rejected message: ' . trim($dataResp)),
+        ];
     }
 }

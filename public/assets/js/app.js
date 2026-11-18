@@ -728,4 +728,62 @@
       }
     });
   }
+
+  // 14. Footer Recognition & Trust Badge Carousel
+  const badgeSlider = document.querySelector('.badge-slider');
+  const badgeTrack = document.querySelector('.badge-track');
+  const badgeStyleTag = document.getElementById('dynamic-carousel-style');
+  if (badgeSlider && badgeTrack && badgeStyleTag) {
+    const originals = Array.from(badgeTrack.children);
+    if (originals.length > 0) {
+      // Ensure track covers viewport cleanly before duplicating once for seamless 50% scroll
+      let guard = 0;
+      while (badgeTrack.scrollWidth < Math.max(badgeSlider.clientWidth, 640) && guard < 10) {
+        originals.forEach((node) => badgeTrack.appendChild(node.cloneNode(true)));
+        guard++;
+      }
+      const baseNodes = Array.from(badgeTrack.children);
+      baseNodes.forEach((node) => badgeTrack.appendChild(node.cloneNode(true)));
+
+      let started = false;
+      const startCarousel = () => {
+        if (started) return;
+        const scrollAmount = badgeTrack.scrollWidth / 2;
+        if (scrollAmount <= 0) return;
+        started = true;
+        const speed = Math.max(20, Number(badgeTrack.dataset.speed || 100));
+        const duration = (scrollAmount / speed).toFixed(2);
+        badgeStyleTag.textContent = `
+          @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-${scrollAmount}px); }
+          }
+          .badge-track {
+            animation: scroll-left ${duration}s linear infinite;
+          }
+        `;
+      };
+
+      const images = Array.from(badgeTrack.querySelectorAll('img'));
+      if (images.length === 0) {
+        startCarousel();
+      } else {
+        let settled = 0;
+        const onImgDone = () => {
+          settled++;
+          if (settled >= images.length) startCarousel();
+        };
+        images.forEach((img) => {
+          if (img.complete) {
+            settled++;
+          } else {
+            img.addEventListener('load', onImgDone, { once: true });
+            img.addEventListener('error', onImgDone, { once: true });
+          }
+        });
+        if (settled >= images.length) startCarousel();
+        setTimeout(startCarousel, 1500);
+      }
+    }
+  }
 })();

@@ -260,12 +260,13 @@
 
     try {
       const fd = new FormData();
-      fd.append('_csrf', window.VC_ADMIN?.csrfToken || '');
+      fd.append('_csrf_token', window.VC_ADMIN?.csrfToken || '');
       const res = await fetch(url, {
         method: 'POST',
         body: fd,
         headers: {
           'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRF-Token': window.VC_ADMIN?.csrfToken || '',
           'Accept': 'application/json'
         }
       });
@@ -285,4 +286,58 @@
       alert(err.message || 'Could not verify cheat. Please try again.');
     }
   });
+
+  // 10. Test Transactional Email Delivery (Mailer)
+  const testMailBtn = document.getElementById('js-test-mailer-btn');
+  const testMailTo = document.getElementById('test_mail_to');
+  const testMailRes = document.getElementById('js-test-mailer-result');
+  if (testMailBtn && testMailTo && testMailRes) {
+    testMailBtn.addEventListener('click', async () => {
+      const url = testMailBtn.dataset.testUrl;
+      const to = testMailTo.value.trim();
+      if (!url) return;
+      if (!to) {
+        testMailRes.hidden = false;
+        testMailRes.className = 'flash flash-error';
+        testMailRes.textContent = 'Enter a recipient email address first.';
+        return;
+      }
+
+      const origText = testMailBtn.textContent;
+      testMailBtn.disabled = true;
+      testMailBtn.textContent = 'Sending...';
+      testMailRes.hidden = true;
+
+      try {
+        const fd = new FormData();
+        fd.append('_csrf_token', window.VC_ADMIN?.csrfToken || '');
+        fd.append('test_to', to);
+        ['mail_driver', 'mail_from', 'mail_api_key', 'smtp_host', 'smtp_port', 'smtp_encryption', 'smtp_user', 'smtp_pass'].forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) fd.append(id, el.value);
+        });
+
+        const res = await fetch(url, {
+          method: 'POST',
+          body: fd,
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-Token': window.VC_ADMIN?.csrfToken || '',
+            'Accept': 'application/json'
+          }
+        });
+        const data = await res.json();
+        testMailRes.hidden = false;
+        testMailRes.className = data.ok ? 'flash flash-success' : 'flash flash-error';
+        testMailRes.textContent = data.message || (data.ok ? 'Test email sent!' : 'Test email failed.');
+      } catch (err) {
+        testMailRes.hidden = false;
+        testMailRes.className = 'flash flash-error';
+        testMailRes.textContent = err.message || 'Could not reach server to test email delivery.';
+      } finally {
+        testMailBtn.disabled = false;
+        testMailBtn.textContent = origText;
+      }
+    });
+  }
 })();

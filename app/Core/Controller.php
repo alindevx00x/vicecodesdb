@@ -5,17 +5,24 @@ namespace App\Core;
 
 use App\Models\Category;
 use App\Models\Setting;
+use App\Models\TrustBadge;
 use App\Models\User;
 
 abstract class Controller
 {
     protected array $settings = [];
     protected array $cheatCategories = [];
+    protected array $trustBadges = [];
 
     public function __construct()
     {
         $this->settings = Setting::allKeyed();
         $this->cheatCategories = Category::byType('cheat');
+        try {
+            $this->trustBadges = TrustBadge::active();
+        } catch (\Throwable) {
+            $this->trustBadges = [];
+        }
 
         // Maintenance mode check for public pages (admins bypass)
         $path = Url::currentPath();
@@ -37,6 +44,7 @@ abstract class Controller
     {
         $data['settings'] = $data['settings'] ?? $this->settings;
         $data['cheatCategories'] = $data['cheatCategories'] ?? $this->cheatCategories;
+        $data['trustBadges'] = $data['trustBadges'] ?? $this->trustBadges;
         $data['flash'] = View::getFlash();
         View::render($template, $data, $layout);
     }

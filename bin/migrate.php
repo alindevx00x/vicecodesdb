@@ -98,6 +98,20 @@ foreach ($migrations as [$table, $col, $alterSql]) {
     }
 }
 
+$pdo->exec(
+    "CREATE TABLE IF NOT EXISTS `trust_badges` (
+      `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+      `label` VARCHAR(120) NOT NULL DEFAULT '',
+      `badge_html` TEXT NOT NULL,
+      `sort_order` INT NOT NULL DEFAULT 0,
+      `is_active` TINYINT(1) NOT NULL DEFAULT 1,
+      `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      PRIMARY KEY (`id`),
+      KEY `idx_trust_badges_active_sort` (`is_active`, `sort_order`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+);
+
 if (!$indexExists($pdo, 'cheats', 'idx_cheats_retest')) {
     $pdo->exec("ALTER TABLE `cheats` ADD KEY `idx_cheats_retest` (`needs_retest`)");
     echo "[MIGRATED] Added idx_cheats_retest\n";

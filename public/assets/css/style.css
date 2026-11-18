@@ -1928,3 +1928,77 @@ p { margin: 0 0 var(--space-14) 0; }
   font-size: 13px;
   font-weight: 700;
 }
+
+/* Footer Recognition & Trust Badge Carousel */
+.vc-badges-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  padding: 1.5rem 1.25rem;
+  margin-bottom: 1.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+.vc-badges-dark {
+  background: var(--bg-slab);
+  color: var(--color-11);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+.vc-badges-light {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+.vc-badges-head { max-width: 100%; }
+.vc-badges-title {
+  font-family: var(--f-display);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}
+.vc-badges-sub {
+  margin: 4px 0 0;
+  font-size: 14px;
+  opacity: 0.82;
+}
+.badge-slider {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 10px 0;
+}
+.badge-track {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  will-change: transform;
+  width: max-content;
+}
+.badge-slider:hover .badge-track {
+  animation-play-state: paused;
+}
+.badge-track a {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.badge-track img {
+  height: 54px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+.badge-track img:hover {
+  transform: scale(1.05);
+}
+@media (max-width: 768px) {
+  .badge-track { gap: 1.5rem; }
+  .badge-track img { height: 44px; }
+}
+@media (max-width: 480px) {
+  .badge-track img { height: 40px; }
+}

@@ -151,9 +151,17 @@ $router->post('/admin/upload-image', [\App\Controllers\Admin\UploadController::c
 
 $router->get('/admin/settings', [\App\Controllers\Admin\SettingAdminController::class, 'index']);
 $router->post('/admin/settings/save', [\App\Controllers\Admin\SettingAdminController::class, 'save']);
+$router->post('/admin/settings/test-mail', [\App\Controllers\Admin\SettingAdminController::class, 'testMail']);
 $router->post('/admin/settings/cache-clear', [\App\Controllers\Admin\SettingAdminController::class, 'clearCache']);
 $router->post('/admin/contact/{id}/status', [\App\Controllers\Admin\SettingAdminController::class, 'contactStatus']);
 $router->post('/admin/contact/{id}/to-cheat', [\App\Controllers\Admin\SettingAdminController::class, 'convertContactToCheat']);
+
+$router->get('/admin/badges', [\App\Controllers\Admin\BadgeAdminController::class, 'index']);
+$router->post('/admin/badges/settings', [\App\Controllers\Admin\BadgeAdminController::class, 'saveSettings']);
+$router->post('/admin/badges/store', [\App\Controllers\Admin\BadgeAdminController::class, 'store']);
+$router->post('/admin/badges/{id}/update', [\App\Controllers\Admin\BadgeAdminController::class, 'update']);
+$router->post('/admin/badges/{id}/toggle', [\App\Controllers\Admin\BadgeAdminController::class, 'toggle']);
+$router->post('/admin/badges/{id}/delete', [\App\Controllers\Admin\BadgeAdminController::class, 'delete']);
 
 // Static CMS Pages catch-all (slugs like /about, /contact, /privacy-policy, /terms, /disclaimer, /how-we-verify)
 $router->get('/{slug}', [\App\Controllers\PageController::class, 'show']);
