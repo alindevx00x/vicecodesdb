@@ -5,3 +5,4 @@ deployment:
     - /bin/rsync -av --exclude='.git' --exclude='.env' --exclude='storage/cache/*' --exclude='storage/logs/*' --exclude='public/og-cache/*' --exclude='public/uploads/editor/*' ./ $DEPLOYPATH
     - /bin/mkdir -p $DEPLOYPATH/storage/cache $DEPLOYPATH/storage/logs/rate_limits $DEPLOYPATH/public/og-cache $DEPLOYPATH/public/uploads/editor
     - /bin/chmod -R 755 $DEPLOYPATH/storage $DEPLOYPATH/public/og-cache $DEPLOYPATH/public/uploads
+    - /bin/rm -f $DEPLOYPATH/storage/cache/*.html $DEPLOYPATH/storage/cache/*.json || true

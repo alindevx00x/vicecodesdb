@@ -27,6 +27,9 @@ Options -Indexes
     # Allow cPanel AutoSSL / Let's Encrypt domain validation
     RewriteRule ^\.well-known/ - [L]
 
+    # Block direct HTTP access to hidden files/folders (.git, .env, etc.)
+    RewriteRule (^|/)\.(?!well-known) - [F,L]
+
     # Block direct HTTP access to internal PHP/DB/storage directories
     RewriteRule ^(app|bin|config|database|storage|views)(/|$) - [F,L]
 
