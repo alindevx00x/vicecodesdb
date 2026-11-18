@@ -178,15 +178,17 @@ final class Cheat
             ':meta_description'   => $data['meta_description'] ?? null,
             ':focus_keyword'      => $data['focus_keyword'] ?? null,
             ':og_image'           => $data['og_image'] ?? null,
+            ':preview_image'      => !empty($data['preview_image']) ? $data['preview_image'] : null,
+            ':preview_image_alt'  => !empty($data['preview_image_alt']) ? $data['preview_image_alt'] : null,
             ':faqs_json'          => $data['faqs_json'] ?? '[]',
             ':changelog_json'     => $data['changelog_json'] ?? '[]',
         ];
 
         if ($id === null) {
             $sql = 'INSERT INTO cheats (title, slug, short_description, content, effects, verification_notes, category_id, status,
-                    is_featured, sort_order, last_verified_at, game_patch, needs_retest, meta_title, meta_description, focus_keyword, og_image, faqs_json, changelog_json, published_at)
+                    is_featured, sort_order, last_verified_at, game_patch, needs_retest, meta_title, meta_description, focus_keyword, og_image, preview_image, preview_image_alt, faqs_json, changelog_json, published_at)
                     VALUES (:title, :slug, :short_description, :content, :effects, :verification_notes, :category_id, :status,
-                    :is_featured, :sort_order, :last_verified_at, :game_patch, :needs_retest, :meta_title, :meta_description, :focus_keyword, :og_image, :faqs_json, :changelog_json, NOW())';
+                    :is_featured, :sort_order, :last_verified_at, :game_patch, :needs_retest, :meta_title, :meta_description, :focus_keyword, :og_image, :preview_image, :preview_image_alt, :faqs_json, :changelog_json, NOW())';
             $stmt = $pdo->prepare($sql);
             $stmt->execute($fields);
             $id = (int) $pdo->lastInsertId();
@@ -197,7 +199,7 @@ final class Cheat
                     is_featured = :is_featured, sort_order = :sort_order, last_verified_at = :last_verified_at,
                     game_patch = :game_patch, needs_retest = :needs_retest,
                     meta_title = :meta_title, meta_description = :meta_description, focus_keyword = :focus_keyword,
-                    og_image = :og_image, faqs_json = :faqs_json, changelog_json = :changelog_json WHERE id = :id';
+                    og_image = :og_image, preview_image = :preview_image, preview_image_alt = :preview_image_alt, faqs_json = :faqs_json, changelog_json = :changelog_json WHERE id = :id';
             $stmt = $pdo->prepare($sql);
             $stmt->execute($fields);
         }
@@ -302,6 +304,73 @@ final class Cheat
     {
         $stmt = Database::pdo()->prepare('UPDATE cheats SET deleted_at = NOW() WHERE id = :id');
         $stmt->execute([':id' => $id]);
+    }
+
+    public static function quickVerify(int $id, string $verifierName = 'Editor'): ?array
+    {
+        $cheat = self::find($id);
+        if (!$cheat) {
+            return null;
+        }
+        $changelog = json_decode((string) ($cheat['changelog_json'] ?? '[]'), true);
+        if (!is_array($changelog)) {
+            $changelog = [];
+        }
+        $patch = trim((string) ($cheat['game_patch'] ?? 'v1.00')) ?: 'v1.00';
+        array_unshift($changelog, [
+            'date' => date('Y-m-d H:i'),
+            'note' => 'Verified on ' . $patch . ' by ' . $verifierName,
+        ]);
+        $changelog = array_slice($changelog, 0, 20);
+
+        $stmt = Database::pdo()->prepare(
+            "UPDATE cheats
+             SET status = 'verified', last_verified_at = NOW(), needs_retest = 0, changelog_json = :cl
+             WHERE id = :id AND deleted_at IS NULL"
+        );
+        $stmt->execute([
+            ':cl' => json_encode($changelog, JSON_UNESCAPED_UNICODE),
+            ':id' => $id,
+        ]);
+
+        return self::find($id);
+    }
+
+    public static function recentLiveUpdates(int $limit = 6): array
+    {
+        $stmt = Database::pdo()->prepare(
+            "SELECT c.id, c.title, c.slug, c.status, c.game_patch, c.short_description,
+                    c.verification_notes, c.changelog_json, c.last_verified_at, c.updated_at,
+                    cat.name AS category_name, cat.slug AS category_slug
+             FROM cheats c
+             LEFT JOIN categories cat ON cat.id = c.category_id
+             WHERE c.deleted_at IS NULL
+             ORDER BY FIELD(c.status, 'verified', 'unconfirmed', 'debunked', 'coming_soon'),
+                      COALESCE(c.last_verified_at, c.updated_at) DESC, c.id DESC
+             LIMIT :lim"
+        );
+        $stmt->bindValue(':lim', $limit, \PDO::PARAM_INT);
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+
+        foreach ($rows as &$row) {
+            $cl = json_decode((string) ($row['changelog_json'] ?? '[]'), true);
+            $latestNote = '';
+            $latestDate = $row['last_verified_at'] ?: $row['updated_at'];
+            if (is_array($cl) && !empty($cl[0]['note'])) {
+                $latestNote = (string) $cl[0]['note'];
+                if (!empty($cl[0]['date'])) {
+                    $latestDate = (string) $cl[0]['date'];
+                }
+            } elseif (!empty($row['verification_notes'])) {
+                $latestNote = (string) $row['verification_notes'];
+            } else {
+                $latestNote = (string) $row['short_description'];
+            }
+            $row['live_note'] = $latestNote;
+            $row['live_time'] = $latestDate;
+        }
+        return $rows;
     }
 
     public static function searchFullText(string $query, int $limit = 15): array

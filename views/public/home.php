@@ -127,6 +127,45 @@ $launchDate = $settings['launch_date'] ?? '2026-11-19T00:00:00Z';
   </div>
 </section>
 
+<!-- 2B. Launch Day Live Verification Feed -->
+<?php if (!empty($liveUpdates)): ?>
+<section class="section" style="padding-top:8px;padding-bottom:24px;">
+  <div class="container">
+    <div class="paper-card live-feed-card">
+      <div class="live-feed-head">
+        <div>
+          <span class="eyebrow" style="display:inline-flex;align-items:center;gap:6px;">
+            <span class="status-dot" aria-hidden="true"></span>
+            Live Verification Feed
+          </span>
+          <h2 style="margin:2px 0 0;">Launch Day <em class="text-accent">Live Updates</em></h2>
+        </div>
+        <a class="btn btn-outline btn-sm" href="<?= View::e(Url::to('/cheats?sort=newest')) ?>">Full Activity Log →</a>
+      </div>
+
+      <ol class="live-feed-list">
+        <?php foreach ($liveUpdates as $item):
+          $uBadge = View::statusBadge($item['status'] ?? 'coming_soon');
+          $uTime = strtotime((string) ($item['live_time'] ?? 'now')) ?: time();
+        ?>
+          <li class="live-feed-item">
+            <div class="live-feed-meta">
+              <time datetime="<?= View::e(date('c', $uTime)) ?>"><?= View::e(date('M j · H:i', $uTime)) ?> UTC</time>
+              <span class="badge <?= View::e($uBadge['class']) ?>"><?= View::e($uBadge['icon'] . ' ' . $uBadge['label']) ?></span>
+              <span class="patch-chip"><?= View::e($item['game_patch'] ?? 'v1.00') ?></span>
+            </div>
+            <div class="live-feed-body">
+              <a href="<?= View::e(Url::to('/cheats/' . $item['slug'])) ?>"><strong><?= View::e($item['title']) ?></strong></a>
+              <span> — <?= View::e($item['live_note']) ?></span>
+            </div>
+          </li>
+        <?php endforeach; ?>
+      </ol>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
+
 <!-- 3. Category Quick Links -->
 <section class="section" style="padding-top:16px;">
   <div class="container">

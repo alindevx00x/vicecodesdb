@@ -60,4 +60,29 @@ final class User
         unset($_SESSION['admin_user_id']);
         session_regenerate_id(true);
     }
+
+    public static function verifyPassword(int $id, string $password): bool
+    {
+        $stmt = Database::pdo()->prepare('SELECT password_hash FROM users WHERE id = :id LIMIT 1');
+        $stmt->execute([':id' => $id]);
+        $hash = $stmt->fetchColumn();
+        return is_string($hash) && $hash !== '' && password_verify($password, $hash);
+    }
+
+    public static function updatePassword(int $id, string $newPassword): void
+    {
+        $hash = password_hash($newPassword, PASSWORD_BCRYPT);
+        $stmt = Database::pdo()->prepare('UPDATE users SET password_hash = :hash WHERE id = :id');
+        $stmt->execute([':hash' => $hash, ':id' => $id]);
+    }
+
+    public static function updateProfile(int $id, string $name, string $bio): void
+    {
+        $stmt = Database::pdo()->prepare('UPDATE users SET name = :name, bio = :bio WHERE id = :id');
+        $stmt->execute([
+            ':name' => trim($name),
+            ':bio'  => trim($bio),
+            ':id'   => $id,
+        ]);
+    }
 }

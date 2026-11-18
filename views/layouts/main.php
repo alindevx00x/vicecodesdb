@@ -104,6 +104,10 @@ $currentPath = Url::currentPath();
       </nav>
 
       <div class="header-actions">
+        <button type="button" class="cmdk-trigger" data-open-cmdk aria-label="Quick search cheats (Cmd+K)">
+          <span>Quick Find</span>
+          <kbd>⌘K</kbd>
+        </button>
         <form class="header-search" action="<?= View::e(Url::to('/search')) ?>" method="get" role="search">
           <label for="hdr-q" class="sr-only">Search GTA 6 cheats</label>
           <input id="hdr-q" type="search" name="q" placeholder="Search cheats, cars..." value="<?= View::e($_GET['q'] ?? '') ?>">
@@ -235,11 +239,34 @@ $currentPath = Url::currentPath();
     </div>
   </aside>
 
+  <!-- Command Palette Quick Search Modal (Cmd/Ctrl + K) -->
+  <div id="vc-cmdk-modal" class="cmdk-modal" hidden aria-modal="true" role="dialog" aria-labelledby="vc-cmdk-title">
+    <div class="cmdk-backdrop" data-close-cmdk></div>
+    <div class="cmdk-dialog">
+      <div class="cmdk-head">
+        <span class="cmdk-icon" aria-hidden="true">⌕</span>
+        <input id="vc-cmdk-input" type="search" placeholder="Search GTA 6 cheats, cars, phone numbers, or PS5/Xbox inputs..." autocomplete="off" aria-label="Instant cheat search">
+        <button type="button" class="cmdk-esc" data-close-cmdk>ESC</button>
+      </div>
+      <div class="cmdk-filters" role="tablist" aria-label="Filter results by platform">
+        <button type="button" class="cmdk-plat active" data-cmdk-plat="">All</button>
+        <button type="button" class="cmdk-plat" data-cmdk-plat="ps5">PS5</button>
+        <button type="button" class="cmdk-plat" data-cmdk-plat="xbox">Xbox</button>
+        <button type="button" class="cmdk-plat" data-cmdk-plat="pc">PC</button>
+        <span id="vc-cmdk-title" class="cmdk-hint">Instant Client Index</span>
+      </div>
+      <div id="vc-cmdk-results" class="cmdk-results">
+        <div class="cmdk-empty">Type to search tracked GTA 6 cheat codes...</div>
+      </div>
+    </div>
+  </div>
+
   <div id="vc-toast" class="toast" role="status" aria-live="polite"></div>
   <script>
     window.VC_APP = {
       baseUrl: <?= json_encode(Url::to('/')) ?>,
       cheatsUrl: <?= json_encode(Url::to('/cheats')) ?>,
+      apiCheatsUrl: <?= json_encode(Url::to('/api/cheats.json')) ?>,
       swUrl: <?= json_encode(Url::to('/sw.js')) ?>,
       initialPlatform: <?= json_encode($activePlatform ?? '') ?>
     };

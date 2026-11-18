@@ -71,12 +71,19 @@ $router->get('/og/cheat/{slug}.png', [\App\Controllers\CheatController::class, '
 
 // Public Pages
 $router->get('/', [\App\Controllers\HomeController::class, 'index']);
+$router->get('/api/cheats.json', [\App\Controllers\CheatController::class, 'apiJson']);
 $router->get('/cheats', [\App\Controllers\CheatController::class, 'index']);
 $router->get('/cheats/printable', [\App\Controllers\CheatController::class, 'printable']);
 $router->get('/cheats/filter', [\App\Controllers\CheatController::class, 'filterAjax']);
 $router->get('/cheats/ps5', [\App\Controllers\CheatController::class, 'platform']);
 $router->get('/cheats/xbox', [\App\Controllers\CheatController::class, 'platform']);
 $router->get('/cheats/pc', [\App\Controllers\CheatController::class, 'platform']);
+$router->get('/cheats/weapons', [\App\Controllers\CheatController::class, 'category']);
+$router->get('/cheats/health', [\App\Controllers\CheatController::class, 'category']);
+$router->get('/cheats/vehicles', [\App\Controllers\CheatController::class, 'category']);
+$router->get('/cheats/wanted', [\App\Controllers\CheatController::class, 'category']);
+$router->get('/cheats/abilities', [\App\Controllers\CheatController::class, 'category']);
+$router->get('/cheats/weather', [\App\Controllers\CheatController::class, 'category']);
 $router->get('/cheats/category/{slug}', [\App\Controllers\CheatController::class, 'category']);
 $router->post('/cheats/{id}/feedback', [\App\Controllers\CheatController::class, 'feedback']);
 $router->get('/cheats/{slug}', [\App\Controllers\CheatController::class, 'show']);
@@ -102,11 +109,15 @@ $router->get('/admin/logout', [\App\Controllers\Admin\AuthController::class, 'lo
 
 // Admin Panel
 $router->get('/admin', [\App\Controllers\Admin\DashboardController::class, 'index']);
+$router->get('/admin/profile', [\App\Controllers\Admin\AuthController::class, 'profile']);
+$router->post('/admin/profile/update', [\App\Controllers\Admin\AuthController::class, 'updateProfile']);
+$router->post('/admin/profile/password', [\App\Controllers\Admin\AuthController::class, 'updatePassword']);
 $router->get('/admin/cheats', [\App\Controllers\Admin\CheatAdminController::class, 'index']);
 $router->get('/admin/cheats/create', [\App\Controllers\Admin\CheatAdminController::class, 'create']);
 $router->post('/admin/cheats/store', [\App\Controllers\Admin\CheatAdminController::class, 'save']);
 $router->get('/admin/cheats/{id}/edit', [\App\Controllers\Admin\CheatAdminController::class, 'edit']);
 $router->post('/admin/cheats/{id}/update', [\App\Controllers\Admin\CheatAdminController::class, 'save']);
+$router->post('/admin/cheats/{id}/quick-verify', [\App\Controllers\Admin\CheatAdminController::class, 'quickVerify']);
 $router->post('/admin/cheats/{id}/delete', [\App\Controllers\Admin\CheatAdminController::class, 'delete']);
 $router->post('/admin/cheats/bulk', [\App\Controllers\Admin\CheatAdminController::class, 'bulk']);
 

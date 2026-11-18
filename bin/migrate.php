@@ -87,6 +87,8 @@ $migrations = [
     ['cheats', 'votes_working', "ALTER TABLE `cheats` ADD COLUMN `votes_working` INT UNSIGNED NOT NULL DEFAULT 0 AFTER `game_patch`"],
     ['cheats', 'votes_broken', "ALTER TABLE `cheats` ADD COLUMN `votes_broken` INT UNSIGNED NOT NULL DEFAULT 0 AFTER `votes_working`"],
     ['cheats', 'needs_retest', "ALTER TABLE `cheats` ADD COLUMN `needs_retest` TINYINT(1) NOT NULL DEFAULT 0 AFTER `votes_broken`"],
+    ['cheats', 'preview_image', "ALTER TABLE `cheats` ADD COLUMN `preview_image` VARCHAR(255) NULL AFTER `og_image`"],
+    ['cheats', 'preview_image_alt', "ALTER TABLE `cheats` ADD COLUMN `preview_image_alt` VARCHAR(255) NULL AFTER `preview_image`"],
 ];
 
 foreach ($migrations as [$table, $col, $alterSql]) {

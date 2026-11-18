@@ -134,6 +134,8 @@ final class CheatAdminController extends Controller
             'meta_description'   => trim((string) ($_POST['meta_description'] ?? '')),
             'focus_keyword'      => trim((string) ($_POST['focus_keyword'] ?? '')),
             'og_image'           => trim((string) ($_POST['og_image'] ?? '')),
+            'preview_image'      => trim((string) ($_POST['preview_image'] ?? '')),
+            'preview_image_alt'  => trim((string) ($_POST['preview_image_alt'] ?? '')),
             'faqs_json'          => json_encode($faqs, JSON_UNESCAPED_UNICODE),
             'changelog_json'     => json_encode($changelog, JSON_UNESCAPED_UNICODE),
             'platforms'          => $_POST['platforms'] ?? [],
@@ -179,6 +181,46 @@ final class CheatAdminController extends Controller
             ActivityLog::record((int) $user['id'], 'bulk_status', 'cheat', null, 'Updated ' . count($ids) . ' cheats to ' . $status);
             View::setFlash('success', 'Updated status for ' . count($ids) . ' cheat(s).');
         }
+        $this->redirect('/admin/cheats');
+    }
+
+    public function quickVerify(array $params): void
+    {
+        $user = $this->requireAdmin();
+        $this->requirePostCsrf();
+
+        $id = (int) ($params['id'] ?? 0);
+        $cheat = Cheat::quickVerify($id, (string) ($user['name'] ?? 'Editor'));
+        $isAjax = strtolower((string) ($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '')) === 'xmlhttprequest'
+            || str_contains(strtolower((string) ($_SERVER['HTTP_ACCEPT'] ?? '')), 'application/json');
+
+        if (!$cheat) {
+            if ($isAjax) {
+                $this->json(['ok' => false, 'message' => 'Cheat not found.'], 404);
+                return;
+            }
+            View::setFlash('error', 'Cheat not found.');
+            $this->redirect('/admin/cheats');
+            return;
+        }
+
+        OgImageGenerator::invalidateCheat($cheat['slug']);
+        PageCache::invalidateAll();
+        IndexNow::pingUrls(['/cheats/' . $cheat['slug'], '/cheats', '/cheats/printable', '/'], $this->settings);
+        ActivityLog::record((int) $user['id'], 'quick_verify', 'cheat', $id, $cheat['title']);
+
+        if ($isAjax) {
+            $this->json([
+                'ok'               => true,
+                'id'               => $id,
+                'status'           => 'verified',
+                'last_verified_at' => $cheat['last_verified_at'],
+                'message'          => 'Verified & published. Cache flushed and IndexNow notified.',
+            ]);
+            return;
+        }
+
+        View::setFlash('success', '"' . $cheat['title'] . '" verified & published. Cache flushed & IndexNow notified.');
         $this->redirect('/admin/cheats');
     }
 

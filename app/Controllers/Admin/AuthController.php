@@ -75,4 +75,63 @@ final class AuthController extends Controller
         View::setFlash('success', 'Signed out securely.');
         $this->redirect('/admin/login');
     }
+
+    public function profile(): void
+    {
+        $user = $this->requireAdmin();
+        $this->render('admin/profile', [
+            'pageTitle' => 'Account Profile & Password',
+            'adminUser' => $user,
+        ], 'layouts/admin');
+    }
+
+    public function updateProfile(): void
+    {
+        $user = $this->requireAdmin();
+        $this->requirePostCsrf();
+
+        $name = trim((string) ($_POST['name'] ?? ''));
+        $bio = trim((string) ($_POST['bio'] ?? ''));
+        if ($name === '') {
+            View::setFlash('error', 'Display name is required.');
+            $this->redirect('/admin/profile');
+            return;
+        }
+
+        User::updateProfile((int) $user['id'], $name, $bio);
+        ActivityLog::record((int) $user['id'], 'update_profile', 'user', (int) $user['id'], 'Updated admin profile');
+        View::setFlash('success', 'Profile details updated.');
+        $this->redirect('/admin/profile');
+    }
+
+    public function updatePassword(): void
+    {
+        $user = $this->requireAdmin();
+        $this->requirePostCsrf();
+
+        $current = (string) ($_POST['current_password'] ?? '');
+        $next    = (string) ($_POST['new_password'] ?? '');
+        $confirm = (string) ($_POST['confirm_password'] ?? '');
+
+        if ($current === '' || !User::verifyPassword((int) $user['id'], $current)) {
+            View::setFlash('error', 'Current password is incorrect.');
+            $this->redirect('/admin/profile');
+            return;
+        }
+        if (strlen($next) < 8) {
+            View::setFlash('error', 'New password must be at least 8 characters long.');
+            $this->redirect('/admin/profile');
+            return;
+        }
+        if (!hash_equals($next, $confirm)) {
+            View::setFlash('error', 'New password and confirmation do not match.');
+            $this->redirect('/admin/profile');
+            return;
+        }
+
+        User::updatePassword((int) $user['id'], $next);
+        ActivityLog::record((int) $user['id'], 'change_password', 'user', (int) $user['id'], 'Changed admin password');
+        View::setFlash('success', 'Password updated successfully.');
+        $this->redirect('/admin/profile');
+    }
 }

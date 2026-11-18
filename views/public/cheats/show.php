@@ -74,6 +74,24 @@ $loadoutPayload = [
       </div>
     </div>
 
+    <?php if (!empty($cheat['preview_image'])): ?>
+      <figure class="paper-card cheat-preview-card" style="padding:16px;margin:0 0 24px;">
+        <div class="cheat-preview-frame">
+          <img
+            src="<?= View::e(Url::to($cheat['preview_image'])) ?>"
+            alt="<?= View::e($cheat['preview_image_alt'] ?: ($cheat['title'] . ' in-game preview')) ?>"
+            loading="lazy"
+            decoding="async">
+          <?php if ($primaryPhone !== ''): ?>
+            <span class="cheat-preview-phone-tag">Dial <?= View::e($primaryPhone) ?></span>
+          <?php endif; ?>
+        </div>
+        <?php if (!empty($cheat['preview_image_alt'])): ?>
+          <figcaption class="muted" style="font-size:13px;margin-top:8px;"><?= View::e($cheat['preview_image_alt']) ?></figcaption>
+        <?php endif; ?>
+      </figure>
+    <?php endif; ?>
+
     <!-- Platform Codes Cards -->
     <div class="paper-card" style="padding:24px;margin-bottom:24px;">
       <h2>Controller &amp; Phone <em class="text-accent">Inputs</em></h2>

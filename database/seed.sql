@@ -180,7 +180,43 @@ INSERT INTO `blog_posts` (`id`, `title`, `slug`, `excerpt`, `quick_answer`, `con
 'Explore how GTA 6 cheat codes in Leonida may evolve from GTA V, from airboat spawns to dual-protagonist mechanics and phone dialing.',
 'GTA 5 vs GTA 6 cheats',
 '[{"q":"Will GTA 5 cheat codes work in GTA 6?","a":"Some classic button patterns may feel similar, but Rockstar historically changes exact combinations between titles. Check our verified badge before entering any code."}]',
-4, 1120, '2026-11-15 11:30:00')
+4, 1120, '2026-11-15 11:30:00'),
+
+(4, 'Do GTA 6 Cheats Disable PS5 Trophies & Xbox Achievements?',
+'do-gta-6-cheats-disable-trophies-achievements',
+'How GTA 6 cheat activation affects PlayStation 5 Trophies, Xbox Series X|S Achievements, and how to protect your Story Mode save file.',
+'Yes—based on every modern Rockstar title including GTA V and Red Dead Redemption 2, activating any cheat code in GTA 6 will disable PlayStation Trophies and Xbox Achievements for your current play session. Always create a separate manual save before entering cheats.',
+'<h2>Why Rockstar Locks Trophies When Cheats Are Active</h2><p>Since GTA IV, Rockstar Games has enforced a strict rule: the moment you enter a controller button combination or dial a cheat phone number, an in-game banner warns you that <strong>Trophies / Achievements are disabled</strong> for the remainder of that session.</p><h2>How to Use Cheats Without Losing Trophy Progress</h2><ol><li><strong>Create a Clean Manual Save:</strong> Open the pause menu and save your Story Mode progress into a dedicated slot before testing any codes.</li><li><strong>Turn Off Auto-Save During Chaos Runs:</strong> Disable auto-save temporarily so a cheated session never overwrites your primary progression slot.</li><li><strong>Reload to Re-Enable Trophies:</strong> When you are ready to earn trophies again, close or reload your clean pre-cheat save file—the lock only applies to the active cheated session.</li></ol><h2>What About GTA 6 Online?</h2><p>Cheat codes only work in single-player Story Mode. Attempting to enter button combos in online multiplayer has no effect and will never unlock online cash or RP.</p>',
+8, NULL, 'PS5 Trophies and Xbox Achievements warning for GTA 6 cheat codes', 'published', 1,
+'Do GTA 6 Cheats Disable PS5 Trophies & Xbox Achievements?',
+'Learn whether GTA 6 cheat codes lock PS5 Trophies and Xbox Achievements, and how to safely back up your Story Mode save before activating codes.',
+'do GTA 6 cheats disable trophies',
+'[{"q":"Are trophies permanently disabled if I use a cheat in GTA 6?","a":"No. Trophies and achievements are only locked for that active session. Reloading a clean manual save made before you entered any cheat restores trophy eligibility."},{"q":"Can I save my game after activating GTA 6 cheats?","a":"In GTA V and RDR2, saving while cheats are active can either be blocked or taint that specific save slot. Keep one dedicated clean save slot untouched."}]',
+3, 940, '2026-11-17 14:00:00'),
+
+(5, 'GTA 6 Director Mode & Sandbox Modifiers: What We Know Before Launch',
+'gta-6-director-mode-sandbox-modifiers',
+'Everything we know about Director Mode, Actor/World modifiers, and sandbox toggles in GTA 6 ahead of the November 19, 2026 release.',
+'Rockstar Games has not officially confirmed whether a standalone Director Mode returns at GTA 6 launch on November 19, 2026. If included alongside Story Mode cheat codes, expect weather, wanted-level, and invincibility toggles similar to GTA V''s Interaction Menu.',
+'<h2>What Director Mode Offered in GTA V</h2><p>In GTA V, Director Mode let players step into a dedicated sandbox studio with instant toggles for <strong>Invincibility, Low Gravity, Explosive Melee, Super Jump, Wanted Status, and Time of Day</strong>—without manually dialing phone numbers or memorizing D-Pad sequences.</p><h2>Will GTA 6 Include Director Mode on Day 1?</h2><p>Historically, Rockstar added Director Mode to GTA V during the PC and next-gen console era rather than on original launch day. Ahead of GTA 6''s November 19 console release, our editors will check the Pause Menu and Interaction Menu immediately at unlock to confirm whether Director Mode or a similar Leonida Sandbox menu is present from Day 1.</p><h2>Tracked Sandbox Modifiers</h2><ul><li><strong>Wanted Level Lock:</strong> Freeze or disable Leonida police response.</li><li><strong>Physics &amp; Weather Toggles:</strong> Moon gravity, slidey cars, and tropical storm cycles.</li><li><strong>Combat Modifiers:</strong> Explosive rounds, flaming bullets, and infinite stamina.</li></ul>',
+7, NULL, 'GTA 6 Director Mode and sandbox modifier overview', 'published', 1,
+'GTA 6 Director Mode & Sandbox Modifiers (2026 Launch Tracker)',
+'Does GTA 6 have Director Mode at launch? Track expected sandbox toggles, world modifiers, and how Director Mode compares to classic Story Mode cheats.',
+'GTA 6 Director Mode',
+'[{"q":"Does GTA 6 have Director Mode at launch?","a":"Rockstar has not confirmed Director Mode ahead of the November 19, 2026 launch. ViceCodes will verify whether a sandbox studio menu is included on Day 1."}]',
+3, 610, '2026-11-17 18:00:00'),
+
+(6, 'All Tracked GTA 6 Vehicle Categories & Rumored Spawns',
+'gta-6-vehicle-categories-rumored-spawns',
+'Breakdown of every GTA 6 vehicle class tracked for spawn cheat codes—supercars, muscle classics, helicopters, boats, and Leonida off-roaders.',
+'Ahead of GTA 6''s November 19, 2026 launch, ViceCodes is tracking spawn cheat slots for Supercars, Vice City Muscle Classics, Helicopters, Boats/Jet Skis, Off-Road Trucks, and Motorcycles. Zero spawn codes are verified until retail unlock.',
+'<h2>Vehicle Categories Tracked for Launch Day</h2><p>Rockstar''s trailers and Leonida showcase highlighted massive vehicle variety across Vice City, Port Gellhorn, and the Grassrivers. Based on GTA V''s vehicle spawn roster, we have prepared dedicated tracker pages for the most likely spawnable classes:</p><ul><li><strong>Supercars &amp; Sports Classics:</strong> Expect rapid spawns akin to the Comet and Rapid GT—check our <a href="/cheats/vehicles">Vehicles &amp; Spawns category</a> on launch morning.</li><li><strong>Helicopters &amp; Aircraft:</strong> Armed Buzzard-style choppers and stunt planes for fast traversal across Leonida.</li><li><strong>Watercraft &amp; Swamp Airboats:</strong> With the Vice Keys and Grassrivers wetlands central to the map, boat or airboat spawns are high on our Day-1 test checklist.</li><li><strong>Motorcycles &amp; Dirt Bikes:</strong> Agile PCJ-style street bikes and Sanchez off-roaders.</li></ul><h2>Important Spawn Rules to Remember</h2><p>In Rockstar games, vehicle spawn cheats require open flat ground in front of your character. Trying to spawn a helicopter or sports car inside tight alleys or indoors usually triggers a "Can''t spawn vehicle here" message.</p>',
+8, NULL, 'Tracked GTA 6 vehicle spawn categories for Vice City and Leonida', 'published', 1,
+'All Tracked GTA 6 Vehicle Categories & Rumored Spawn Cheats',
+'Explore every GTA 6 vehicle category we are tracking for spawn cheats on PS5 and Xbox Series X|S, from Vice City supercars to helicopters and boats.',
+'GTA 6 vehicle spawn cheats',
+'[{"q":"Can you spawn any car in GTA 6 with a cheat code?","a":"Usually no. Rockstar limits vehicle spawn cheats to a curated list of 8 to 12 iconic cars, bikes, boats, and helicopters rather than every vehicle in the game."}]',
+4, 780, '2026-11-18 01:00:00')
 ON DUPLICATE KEY UPDATE `title` = VALUES(`title`);
 
 -- 6. Static Pages (Editable via Admin + TinyMCE)
@@ -286,5 +322,8 @@ INSERT IGNORE INTO `cheat_tags` (`cheat_id`, `tag_id`) VALUES
 INSERT IGNORE INTO `blog_post_tags` (`blog_post_id`, `tag_id`) VALUES
 (1, 7), (1, 8),
 (2, 1), (2, 2), (2, 3), (2, 7),
-(3, 4), (3, 5), (3, 6), (3, 8);
+(3, 4), (3, 5), (3, 6), (3, 8),
+(4, 1), (4, 2), (4, 7),
+(5, 4), (5, 8),
+(6, 1), (6, 2), (6, 5), (6, 8);
 

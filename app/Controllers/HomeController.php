@@ -17,6 +17,7 @@ final class HomeController extends Controller
         if ($featuredCheats === []) {
             $featuredCheats = Cheat::listFiltered([], 6);
         }
+        $liveUpdates = Cheat::recentLiveUpdates(6);
         $latestPosts = BlogPost::published([], 3);
 
         $homeFaqs = [
@@ -57,6 +58,7 @@ final class HomeController extends Controller
             'seo'            => $seo,
             'statusCounts'   => $statusCounts,
             'featuredCheats' => $featuredCheats,
+            'liveUpdates'    => $liveUpdates,
             'latestPosts'    => $latestPosts,
             'homeFaqs'       => $homeFaqs,
         ]);

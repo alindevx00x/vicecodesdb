@@ -49,6 +49,16 @@ $loadoutPayload = [
 
   <p class="cheat-desc"><?= View::e($cheat['short_description']) ?></p>
 
+  <?php if (!empty($cheat['preview_image'])): ?>
+    <a class="cheat-preview-thumb" href="<?= View::e(Url::to('/cheats/' . $cheat['slug'])) ?>">
+      <img
+        src="<?= View::e(Url::to($cheat['preview_image'])) ?>"
+        alt="<?= View::e($cheat['preview_image_alt'] ?: ($cheat['title'] . ' preview')) ?>"
+        loading="lazy"
+        decoding="async">
+    </a>
+  <?php endif; ?>
+
   <?php if (!empty($platforms)): ?>
     <div class="plat-tabs" role="tablist">
       <?php foreach ($platforms as $pKey => $pRow): ?>

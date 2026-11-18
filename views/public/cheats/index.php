@@ -40,12 +40,28 @@ use App\Core\View;
       </div>
     <?php endif; ?>
 
-    <!-- Platform Quick Switcher -->
-    <div class="platform-pills" style="margin-bottom:20px;">
+    <!-- Platform & Category Filter Matrix -->
+    <div class="platform-pills" style="margin-bottom:10px;">
       <a class="platform-pill" data-global-plat="" href="<?= View::e(Url::to('/cheats')) ?>" style="<?= empty($activePlatform) ? 'border-color:var(--color-1);background:var(--color-1);color:var(--color-11);' : '' ?>">All Platforms</a>
       <a class="platform-pill" data-global-plat="ps5" href="<?= View::e(Url::to('/cheats/ps5')) ?>" style="<?= ($activePlatform ?? '') === 'ps5' ? 'border-color:var(--color-1);background:var(--color-1);color:var(--color-11);' : '' ?>">PS5</a>
       <a class="platform-pill" data-global-plat="xbox" href="<?= View::e(Url::to('/cheats/xbox')) ?>" style="<?= ($activePlatform ?? '') === 'xbox' ? 'border-color:var(--color-1);background:var(--color-1);color:var(--color-11);' : '' ?>">Xbox Series X|S</a>
       <a class="platform-pill" data-global-plat="pc" href="<?= View::e(Url::to('/cheats/pc')) ?>" style="<?= ($activePlatform ?? '') === 'pc' ? 'border-color:var(--color-1);background:var(--color-1);color:var(--color-11);' : '' ?>">PC</a>
+    </div>
+    <div class="platform-pills" style="margin-bottom:20px;">
+      <?php
+      $catShortcuts = [
+          'weapons-combat'   => ['label' => 'Weapons', 'path' => '/cheats/weapons'],
+          'health-armor'     => ['label' => 'Health & Armor', 'path' => '/cheats/health'],
+          'vehicles-spawns'  => ['label' => 'Vehicles', 'path' => '/cheats/vehicles'],
+          'wanted-level'     => ['label' => 'Wanted Level', 'path' => '/cheats/wanted'],
+          'player-abilities' => ['label' => 'Abilities', 'path' => '/cheats/abilities'],
+          'weather-world'    => ['label' => 'Weather & World', 'path' => '/cheats/weather'],
+      ];
+      foreach ($catShortcuts as $catSlug => $sc):
+          $isAct = ($activeCategory['slug'] ?? '') === $catSlug;
+      ?>
+        <a class="platform-pill" href="<?= View::e(Url::to($sc['path'])) ?>" style="<?= $isAct ? 'border-color:var(--color-2);background:var(--color-2);color:#fff;' : '' ?>"><?= View::e($sc['label']) ?></a>
+      <?php endforeach; ?>
     </div>
 
     <!-- AJAX Filter Bar -->

@@ -194,6 +194,17 @@ $changelog = json_decode((string) ($cheat['changelog_json'] ?? '[]'), true) ?: [
           <textarea id="meta_description" name="meta_description" rows="3"><?= View::e($cheat['meta_description'] ?? '') ?></textarea>
         </div>
         <div class="field">
+          <label for="preview_image">Vehicle / Effect Preview Screenshot (WebP)</label>
+          <div style="display:flex;gap:8px;">
+            <input id="preview_image" type="text" name="preview_image" value="<?= View::e($cheat['preview_image'] ?? '') ?>" placeholder="/uploads/editor/vehicle.webp">
+            <button type="button" class="btn btn-secondary btn-sm js-open-media-picker" data-media-target="#preview_image">Media</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="preview_image_alt">Preview Screenshot Alt Text</label>
+          <input id="preview_image_alt" type="text" name="preview_image_alt" value="<?= View::e($cheat['preview_image_alt'] ?? '') ?>" placeholder="e.g. Spawned Comet Retro in Vice City">
+        </div>
+        <div class="field">
           <label for="og_image">OG Image URL (leave blank for auto-generated PNG card)</label>
           <div style="display:flex;gap:8px;">
             <input id="og_image" type="text" name="og_image" value="<?= View::e($cheat['og_image'] ?? '') ?>" placeholder="Auto /og/cheat/{slug}.png">

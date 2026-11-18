@@ -44,12 +44,21 @@ use App\Core\View;
                 <div style="font-size:0.78rem;color:var(--adm-muted);">/cheats/<?= View::e($c['slug']) ?></div>
               </td>
               <td><?= View::e($c['category_name'] ?? 'Uncategorized') ?></td>
-              <td><span class="badge badge-<?= View::e($c['status']) ?>"><?= View::e(str_replace('_', ' ', $c['status'])) ?></span></td>
+              <td data-status-cell><span class="badge badge-<?= View::e($c['status']) ?>"><?= View::e(str_replace('_', ' ', $c['status'])) ?></span></td>
               <td style="font-size:0.8rem;color:var(--adm-muted);">
                 <?= View::e(mb_strimwidth($c['platforms']['ps5']['code_sequence'] ?? '-', 0, 28, '...')) ?>
               </td>
               <td><?= number_format((int) $c['views']) ?></td>
               <td style="white-space:nowrap;">
+                <?php if ($c['status'] !== 'verified' || !empty($c['needs_retest'])): ?>
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-sm js-quick-verify"
+                    data-verify-url="<?= View::e(Url::to('/admin/cheats/' . $c['id'] . '/quick-verify')) ?>"
+                    title="Verify, stamp timestamp, flush cache, and ping IndexNow">
+                    ✓ Verify &amp; Publish
+                  </button>
+                <?php endif; ?>
                 <a class="btn btn-secondary btn-sm" href="<?= View::e(Url::to('/admin/cheats/' . $c['id'] . '/edit')) ?>">Edit</a>
                 <a class="btn btn-secondary btn-sm" href="<?= View::e(Url::to('/cheats/' . $c['slug'])) ?>" target="_blank">View</a>
                 <button type="submit" formaction="<?= View::e(Url::to('/admin/cheats/' . $c['id'] . '/delete')) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Delete this cheat?')">Delete</button>

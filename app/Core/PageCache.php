@@ -50,7 +50,7 @@ final class PageCache
             return false;
         }
         $path = Url::currentPath();
-        $skipPrefixes = ['/admin', '/search', '/newsletter', '/cheats/filter', '/og/', '/sitemap', '/feed.xml'];
+        $skipPrefixes = ['/admin', '/search', '/newsletter', '/cheats/filter', '/api/', '/og/', '/sitemap', '/feed.xml'];
         foreach ($skipPrefixes as $prefix) {
             if (str_starts_with($path, $prefix)) {
                 return false;
@@ -132,7 +132,7 @@ final class PageCache
         if (!is_dir($dir)) {
             return;
         }
-        foreach (glob($dir . '/*.html') ?: [] as $file) {
+        foreach (array_merge(glob($dir . '/*.html') ?: [], glob($dir . '/*.json') ?: []) as $file) {
             @unlink($file);
         }
     }

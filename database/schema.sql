@@ -74,6 +74,8 @@ CREATE TABLE IF NOT EXISTS `cheats` (
   `meta_description` VARCHAR(320) NULL,
   `focus_keyword` VARCHAR(120) NULL,
   `og_image` VARCHAR(255) NULL,
+  `preview_image` VARCHAR(255) NULL,
+  `preview_image_alt` VARCHAR(255) NULL,
   `faqs_json` JSON NULL,
   `changelog_json` JSON NULL,
   `views` INT UNSIGNED NOT NULL DEFAULT 0,

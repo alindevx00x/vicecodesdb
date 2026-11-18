@@ -595,4 +595,137 @@
       navigator.serviceWorker.register(window.VC_APP.swUrl).catch(() => {});
     });
   }
+
+  // 13. Instant Command Palette Search (Cmd/Ctrl + K via /api/cheats.json)
+  const cmdkModal = document.getElementById('vc-cmdk-modal');
+  const cmdkInput = document.getElementById('vc-cmdk-input');
+  const cmdkResults = document.getElementById('vc-cmdk-results');
+  if (cmdkModal && cmdkInput && cmdkResults) {
+    let cheatsCache = null;
+    let activePlat = '';
+    let activeIndex = 0;
+    let lastFiltered = [];
+
+    const escHtml = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[ch]));
+
+    const loadCheatsIndex = async () => {
+      if (cheatsCache) return cheatsCache;
+      const apiUrl = window.VC_APP?.apiCheatsUrl || '/api/cheats.json';
+      try {
+        const res = await fetch(apiUrl, { headers: { 'Accept': 'application/json' } });
+        const data = await res.json();
+        cheatsCache = Array.isArray(data.cheats) ? data.cheats : [];
+      } catch {
+        cheatsCache = [];
+      }
+      return cheatsCache;
+    };
+
+    const renderCmdk = () => {
+      const q = cmdkInput.value.trim().toLowerCase();
+      const items = (cheatsCache || []).filter((c) => {
+        if (activePlat && !c[activePlat]) return false;
+        if (!q) return true;
+        return (
+          c.title.toLowerCase().includes(q) ||
+          c.category.toLowerCase().includes(q) ||
+          c.short.toLowerCase().includes(q) ||
+          c.ps5.toLowerCase().includes(q) ||
+          c.xbox.toLowerCase().includes(q) ||
+          c.pc.toLowerCase().includes(q) ||
+          c.phone.toLowerCase().includes(q)
+        );
+      }).slice(0, 12);
+
+      lastFiltered = items;
+      if (activeIndex >= items.length) activeIndex = 0;
+
+      if (items.length === 0) {
+        cmdkResults.innerHTML = '<div class="cmdk-empty">No matching GTA 6 cheats found.</div>';
+        return;
+      }
+
+      cmdkResults.innerHTML = items.map((c, idx) => {
+        const codeText = activePlat ? (c[activePlat] || c.phone || 'Tracked') : (c.ps5 || c.xbox || c.pc || c.phone || 'Coming at launch');
+        const statusLabel = c.status.replace('_', ' ');
+        return `
+          <div class="cmdk-item ${idx === activeIndex ? 'active' : ''}" data-cmdk-idx="${idx}">
+            <a class="cmdk-item-main" href="${escHtml(c.url)}">
+              <div class="cmdk-item-top">
+                <strong>${escHtml(c.title)}</strong>
+                <span class="cmdk-cat">${escHtml(c.category)}</span>
+                <span class="badge badge-${escHtml(c.status === 'coming_soon' ? 'coming' : c.status)}">${escHtml(statusLabel)}</span>
+              </div>
+              <div class="cmdk-item-sub">${escHtml(codeText)}</div>
+            </a>
+            ${codeText && codeText !== 'Coming at launch' ? `<button type="button" class="copy-btn cmdk-copy" data-copy-text="${escHtml(codeText)}">Copy</button>` : ''}
+          </div>
+        `;
+      }).join('');
+    };
+
+    const openCmdk = async () => {
+      cmdkModal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      cmdkInput.focus();
+      cmdkInput.select();
+      if (!cheatsCache) {
+        cmdkResults.innerHTML = '<div class="cmdk-empty">Loading instant cheat index...</div>';
+        await loadCheatsIndex();
+      }
+      renderCmdk();
+    };
+
+    const closeCmdk = () => {
+      cmdkModal.hidden = true;
+      document.body.style.overflow = '';
+    };
+
+    document.querySelectorAll('[data-open-cmdk]').forEach((btn) => {
+      btn.addEventListener('click', openCmdk);
+    });
+    cmdkModal.querySelectorAll('[data-close-cmdk]').forEach((el) => {
+      el.addEventListener('click', closeCmdk);
+    });
+
+    cmdkModal.querySelectorAll('[data-cmdk-plat]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        activePlat = btn.dataset.cmdkPlat || '';
+        cmdkModal.querySelectorAll('[data-cmdk-plat]').forEach((b) => b.classList.toggle('active', b === btn));
+        activeIndex = 0;
+        renderCmdk();
+      });
+    });
+
+    cmdkInput.addEventListener('input', () => {
+      activeIndex = 0;
+      renderCmdk();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        if (cmdkModal.hidden) openCmdk(); else closeCmdk();
+        return;
+      }
+      if (cmdkModal.hidden) return;
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeCmdk();
+      } else if (e.key === 'ArrowDown' && lastFiltered.length > 0) {
+        e.preventDefault();
+        activeIndex = (activeIndex + 1) % lastFiltered.length;
+        renderCmdk();
+      } else if (e.key === 'ArrowUp' && lastFiltered.length > 0) {
+        e.preventDefault();
+        activeIndex = (activeIndex - 1 + lastFiltered.length) % lastFiltered.length;
+        renderCmdk();
+      } else if (e.key === 'Enter' && lastFiltered[activeIndex] && document.activeElement === cmdkInput) {
+        e.preventDefault();
+        window.location.href = lastFiltered[activeIndex].url;
+      }
+    });
+  }
 })();

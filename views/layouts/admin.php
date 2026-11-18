@@ -44,6 +44,7 @@ $currentPath = Url::currentPath();
         <a href="<?= View::e(Url::to('/admin/newsletter')) ?>" class="<?= str_starts_with($currentPath, '/admin/newsletter') ? 'active' : '' ?>">Newsletter</a>
         <a href="<?= View::e(Url::to('/admin/media')) ?>" class="<?= str_starts_with($currentPath, '/admin/media') ? 'active' : '' ?>">Media Library</a>
         <a href="<?= View::e(Url::to('/admin/settings')) ?>" class="<?= str_starts_with($currentPath, '/admin/settings') ? 'active' : '' ?>">Site Settings</a>
+        <a href="<?= View::e(Url::to('/admin/profile')) ?>" class="<?= str_starts_with($currentPath, '/admin/profile') ? 'active' : '' ?>">Profile &amp; Password</a>
       </nav>
 
       <div style="margin-top:auto;padding-top:14px;border-top:1px solid var(--color-6);font-size:13px;color:var(--color-3);">

@@ -122,9 +122,76 @@ final class CheatController extends Controller
         ]);
     }
 
+    public function apiJson(): void
+    {
+        $cacheFile = PageCache::cacheDir() . '/api_cheats.json';
+        if (PageCache::isEnabled() && file_exists($cacheFile) && (time() - (int) @filemtime($cacheFile)) < 600) {
+            $cached = @file_get_contents($cacheFile);
+            if ($cached !== false && $cached !== '') {
+                header('Content-Type: application/json; charset=utf-8');
+                header('Cache-Control: public, max-age=300');
+                header('X-VC-Cache: HIT');
+                echo $cached;
+                return;
+            }
+        }
+
+        $cheats = Cheat::listFiltered([], 500);
+        $items = [];
+        foreach ($cheats as $c) {
+            $plats = $c['platforms'] ?? [];
+            $phone = $plats['ps5']['cell_number']
+                ?? ($plats['xbox']['cell_number'] ?? ($plats['pc']['cell_number'] ?? ''));
+            $items[] = [
+                'id'            => (int) $c['id'],
+                'title'         => (string) $c['title'],
+                'slug'          => (string) $c['slug'],
+                'url'           => \App\Core\Url::to('/cheats/' . $c['slug']),
+                'category'      => (string) ($c['category_name'] ?? 'Uncategorized'),
+                'category_slug' => (string) ($c['category_slug'] ?? ''),
+                'status'        => (string) $c['status'],
+                'patch'         => (string) ($c['game_patch'] ?? 'v1.00'),
+                'short'         => (string) $c['short_description'],
+                'ps5'           => (string) ($plats['ps5']['code_sequence'] ?? ''),
+                'xbox'          => (string) ($plats['xbox']['code_sequence'] ?? ''),
+                'pc'            => (string) ($plats['pc']['code_sequence'] ?? ''),
+                'phone'         => (string) $phone,
+                'preview_image' => (string) ($c['preview_image'] ?? ''),
+            ];
+        }
+
+        $payload = json_encode([
+            'generated_at' => gmdate('c'),
+            'count'        => count($items),
+            'cheats'       => $items,
+        ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+        $dir = PageCache::cacheDir();
+        if (!is_dir($dir)) {
+            @mkdir($dir, 0755, true);
+        }
+        if ($payload !== false) {
+            @file_put_contents($cacheFile, $payload, LOCK_EX);
+        }
+
+        header('Content-Type: application/json; charset=utf-8');
+        header('Cache-Control: public, max-age=300');
+        header('X-VC-Cache: MISS');
+        echo $payload ?: '{"cheats":[]}';
+    }
+
     public function category(array $params): void
     {
-        $slug = (string) ($params['slug'] ?? '');
+        $shortMap = [
+            'weapons'   => 'weapons-combat',
+            'health'    => 'health-armor',
+            'vehicles'  => 'vehicles-spawns',
+            'wanted'    => 'wanted-level',
+            'abilities' => 'player-abilities',
+            'weather'   => 'weather-world',
+        ];
+        $rawSlug = strtolower((string) ($params['slug'] ?? basename(\App\Core\Url::currentPath())));
+        $slug = $shortMap[$rawSlug] ?? $rawSlug;
         $category = Category::findBySlug($slug, 'cheat');
         if (!$category) {
             (new PageController())->notFound();
@@ -148,6 +215,7 @@ final class CheatController extends Controller
         $seo = Seo::buildMeta([
             'title'       => $category['meta_title'] ?: ($category['name'] . ' - GTA 6 Cheat Codes | ViceCodes'),
             'description' => $category['meta_description'] ?: $category['description'],
+            'canonical'   => \App\Core\Url::full('/cheats/category/' . $category['slug']),
             'schemas'     => [
                 Seo::breadcrumbSchema($breadcrumbs),
                 Seo::itemListSchema($category['name'] . ' GTA 6 Cheats', $listItems),

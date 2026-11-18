@@ -246,4 +246,43 @@
       document.querySelectorAll('input[name="ids[]"]').forEach(cb => { cb.checked = checkAll.checked; });
     });
   }
+
+  // 9. 1-Click Quick Verify & Publish Action
+  document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.js-quick-verify');
+    if (!btn) return;
+    const url = btn.dataset.verifyUrl;
+    if (!url || btn.disabled) return;
+
+    const origText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Verifying...';
+
+    try {
+      const fd = new FormData();
+      fd.append('_csrf', window.VC_ADMIN?.csrfToken || '');
+      const res = await fetch(url, {
+        method: 'POST',
+        body: fd,
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'Accept': 'application/json'
+        }
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        throw new Error(data.message || 'Verification failed');
+      }
+      const tr = btn.closest('tr');
+      const statusCell = tr ? tr.querySelector('[data-status-cell]') : null;
+      if (statusCell) {
+        statusCell.innerHTML = '<span class="badge badge-verified">verified</span>';
+      }
+      btn.remove();
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = origText;
+      alert(err.message || 'Could not verify cheat. Please try again.');
+    }
+  });
 })();
