@@ -135,14 +135,18 @@ $blogImageDefaults = [
     ['gta-6-director-mode-sandbox-modifiers', '/assets/img/blog/gta-6-director-mode-skyline.webp', 'Illuminated Miami skyline at night representing GTA 6 Director Mode and world modifiers'],
     ['gta-6-vehicle-categories-rumored-spawns', '/assets/img/blog/gta-6-vehicle-spawns.webp', 'Yellow Audi R8 exotic supercar under city night lights representing GTA 6 vehicle spawn cheats'],
     ['why-gta-6-cheats-dont-work-at-start-fact-check', '/assets/img/blog/gta-6-cheat-unlock-guide.webp', 'PS5 DualSense controller D-Pad and triggers used to enter GTA 6 cheat codes after unlocking the Cheats menu'],
+    ['all-verified-gta-6-cheat-codes-day-1-live-list', '/assets/img/blog/all-verified-gta-6-cheat-codes-day-1.webp', 'Xbox Series X|S controller D-Pad and triggers used to enter verified GTA 6 cheat codes'],
+    ['gta-6-infinite-money-cheat-debunked-250k-code', '/assets/img/blog/gta-6-infinite-money-debunked.webp', 'Briefcase of cash representing the verified post-story $250,000 GTA 6 cheat vs fake infinite money scams'],
 ];
 $stImg = $pdo->prepare("UPDATE `blog_posts` SET `featured_image` = ?, `featured_image_alt` = ? WHERE `slug` = ? AND (`featured_image` IS NULL OR `featured_image` = '')");
 foreach ($blogImageDefaults as [$slug, $imgPath, $altText]) {
     $stImg->execute([$imgPath, $altText, $slug]);
 }
 
-$pdo->prepare("UPDATE `settings` SET `setting_value` = ? WHERE `setting_key` = 'launch_banner_text' AND `setting_value` LIKE '0 Verified Codes (as of Nov 17%'")
-    ->execute(['61 GTA 6 Cheats Tracked · Unlock after 91 Story Missions (↑ Phone + L1/LB + R1/RB + D-Pad)']);
+$pdo->prepare("UPDATE `settings` SET `setting_value` = 'launched' WHERE `setting_key` = 'launch_mode' AND `setting_value` = 'pre_launch'")
+    ->execute();
+$pdo->prepare("UPDATE `settings` SET `setting_value` = ? WHERE `setting_key` = 'launch_banner_text' AND (`setting_value` LIKE '0 Verified Codes%' OR `setting_value` LIKE '61 GTA 6 Cheats Tracked%')")
+    ->execute(['LIVE NOW: 14 Verified GTA 6 Cheats Live for PS5 & Xbox (Patch v1.00) · 61 Total Tracked']);
 
 if (!$indexExists($pdo, 'cheats', 'idx_cheats_retest')) {
     $pdo->exec("ALTER TABLE `cheats` ADD KEY `idx_cheats_retest` (`needs_retest`)");
@@ -197,4 +201,5 @@ if ($withSeed) {
     }
 }
 
+\App\Core\PageCache::invalidateAll();
 echo "[DONE] Migration complete.\n";

@@ -56,7 +56,7 @@ $launchDate = $settings['launch_date'] ?? '2026-11-19T00:00:00Z';
         </p>
       <?php else: ?>
         <p style="font-size:14px;color:var(--text-primary);margin:12px 0;">
-          GTA 6 is live! Editors are actively testing and timestamping Story Mode codes on PS5 and Xbox Series X|S.
+          GTA 6 is live! <strong>61 cheats</strong> unlock post-story (91 missions): press <code>D-Pad Up</code> (Phone) → hold <code>L1/LB</code> + press <code>R1/RB</code> → enter sequence.
         </p>
       <?php endif; ?>
 
